@@ -7,7 +7,7 @@ import { DataService } from './data.service';
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent implements OnInit {
-  title = "Openpie";
+  title = "Pie Connect";
   data: any = {};
   tabletop = null;
   

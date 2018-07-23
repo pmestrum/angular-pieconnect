@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Settings, Term } from './model';
+import { Lang, Settings, Term } from './model';
 import * as Tabletop from 'tabletop';
+
 // const Tabletop = require('tabletop');
 
 @Injectable()
@@ -63,8 +64,22 @@ export class DataService {
                 lon: getSetting('map-center-lon'),
                 zoom: getSetting('map-zoom'),
                 disablePanZoom: getSetting('map-disable-pan-zoom').toUpperCase() === 'TRUE',
+                bounds: {
+                    minLat: null, minLong: null, maxLat: null, maxLong: null
+                }
             }
         };
+        Object.keys(langElements).map(key => langElements[key]).forEach((lang: Lang) => {
+            if (lang.LAT && lang.LONG) {
+                const lat = lang.LAT && parseInt(lang.LAT);
+                const long = lang.LONG && parseInt(lang.LONG);
+
+                settings.map.bounds.minLat = settings.map.bounds.minLat && Math.min(settings.map.bounds.minLat, lat) || lat;
+                settings.map.bounds.minLong = settings.map.bounds.minLong && Math.min(settings.map.bounds.minLong, long) || long;
+                settings.map.bounds.maxLat = settings.map.bounds.maxLat && Math.max(settings.map.bounds.maxLat, lat) || lat;
+                settings.map.bounds.maxLong = settings.map.bounds.maxLong && Math.max(settings.map.bounds.maxLong, long) || long;
+            }
+        });
 
         console.log({ langElements, termElements, lawElements, settings });
         return { langElements, termElements, lawElements, settings };

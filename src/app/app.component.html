@@ -22,16 +22,22 @@
                     <mat-cell *matCellDef="let row" (click)="selectRow(row)"> {{row.TERM_ID}}</mat-cell>
                 </ng-container>
 
-                <!-- Progress Column -->
+                <!-- Info Column -->
                 <ng-container matColumnDef="INFO">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Info</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.INFO}}</mat-cell>
                 </ng-container>
 
-                <!-- Color Column -->
+                <!-- Semantics Column -->
                 <ng-container matColumnDef="SEMANT">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Semantics</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.SEMANT}}</mat-cell>
+                </ng-container>
+
+                <!-- has coordinate Column -->
+                <ng-container matColumnDef="COORD">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Map</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.lang.LAT && row.lang.LONG ? 'X' : ''}}</mat-cell>
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -41,19 +47,22 @@
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
         </div>
     </div>
-    <div class="record-container">
-<pre>
-{{selected | json}}
-</pre>
-    </div>
-    <div class="map-container" *ngIf="leafletOptions">
-        <div style="height: 500px;width: 800px"
+    <div class="map-container">
+        <div class="map"
              leaflet
              [leafletOptions]="leafletOptions"
              [leafletLayers]="markers"
              (leafletMapReady)="map = mapReady($event)"
+             *ngIf="leafletOptions"
              >
         </div>
+    </div>
+</div>
+<div class="container">
+    <div class="record-container">
+<pre>
+{{selected | json}}
+</pre>
     </div>
 </div>
 

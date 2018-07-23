@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from './data.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Settings, Term } from './model';
-import { circle, geoJSON, icon, latLng, Layer, marker, polygon, tileLayer } from 'leaflet';
+import { circle, geoJSON, icon, latLng, latLngBounds,Layer, marker, polygon, tileLayer } from 'leaflet';
 
 @Component({
     selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
     termElements: Term[] = [];
     tabletop = null;
 
-    displayedColumns = ['TERM_ID', 'INFO', 'SEMANT'];
+    displayedColumns = ['TERM_ID', 'INFO', 'SEMANT', 'COORD'];
     dataSource: MatTableDataSource<any>;
     leafletOptions;
 
@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
     map;
     private settings: Settings;
     markers: Layer[] = [];
+    bounds;
 
     constructor(private dataService: DataService) {
     }
@@ -40,13 +41,15 @@ export class AppComponent implements OnInit {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
 
+            this.bounds = latLngBounds(latLng(settings.map.bounds.minLat, settings.map.bounds.minLong), latLng(settings.map.bounds.maxLat, settings.map.bounds.maxLong));
             this.leafletOptions = {
                 layers: [
                     tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
                 ],
                 zoom: settings.map.zoom,
-                center: latLng(settings.map.lat, settings.map.lon),
-                zoomControl: !settings.map.disablePanZoom
+                center: latLng((settings.map.bounds.maxLat + settings.map.bounds.minLat)/2, (settings.map.bounds.maxLong + settings.map.bounds.minLong)/2),
+                zoomControl: !settings.map.disablePanZoom,
+                // maxBounds: latLngBounds(latLng(settings.map.bounds.minLat, settings.map.bounds.minLong), latLng(settings.map.bounds.maxLat, settings.map.bounds.maxLong)),
             };
         });
     }
@@ -75,6 +78,7 @@ export class AppComponent implements OnInit {
     mapReady(map) {
         this.map = map;
 
+        map.fitBounds(this.bounds);
         if (this.settings.map.disablePanZoom) {
             map.dragging.disable();
             map.touchZoom.disable();

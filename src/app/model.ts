@@ -14,7 +14,7 @@ export interface Lang {
     FAMILY: string;
     GLOTTO: string;
     LANG_ID: number
-    LAT; string;
+    LAT: string;
     LONG: string;
     NAME: string;
     TEMP: string;
@@ -33,5 +33,12 @@ export interface Settings {
         lon: number;
         zoom: number;
         disablePanZoom: boolean;
+        bounds: {
+            minLat: number;
+            minLong: number;
+            maxLat: number;
+            maxLong: number;
+        }
+
     }
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Term } from './model';
-
-const Tabletop = require('tabletop');
+import { Settings, Term } from './model';
+import * as Tabletop from 'tabletop';
+// const Tabletop = require('tabletop');
 
 @Injectable()
 export class DataService {
 
-    loadData$(): Promise<{ termElements: Term[], tabletop: any }> {
+    loadData$(): Promise<{ termElements: Term[], settings: Settings, tabletop: any }> {
         console.log('in loadData$');
         return new Promise((resolve, reject) => {
             console.log('in loadData');
@@ -17,7 +17,7 @@ export class DataService {
                     console.log(tabletop);
                     const elements = this.normalizeData(data);
                     const termElements = Object.keys(elements.termElements).map(key => elements.termElements[key]);
-                    resolve({ termElements, tabletop });
+                    resolve({ termElements, tabletop, settings: elements.settings });
                 },
                 simpleSheet: false,
                 parseNumbers: true
@@ -55,7 +55,18 @@ export class DataService {
             }
         });
 
-        console.log({ langElements, termElements, lawElements });
-        return { langElements, termElements, lawElements };
+        const getSetting = (key) => data.SETTINGS.elements.find(el => el.KEY === key).VALUE;
+
+        const settings: Settings = {
+            map: {
+                lat: getSetting('map-center-lat'),
+                lon: getSetting('map-center-lon'),
+                zoom: getSetting('map-zoom'),
+                disablePanZoom: getSetting('map-disable-pan-zoom').toUpperCase() === 'TRUE',
+            }
+        };
+
+        console.log({ langElements, termElements, lawElements, settings });
+        return { langElements, termElements, lawElements, settings };
     }
 }

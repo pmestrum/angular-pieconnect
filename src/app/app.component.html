@@ -19,7 +19,7 @@
                 <!-- ID Column -->
                 <ng-container matColumnDef="TERM_ID">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-                    <mat-cell *matCellDef="let row" (click)="selected = row"> {{row.TERM_ID}}</mat-cell>
+                    <mat-cell *matCellDef="let row" (click)="selectRow(row)"> {{row.TERM_ID}}</mat-cell>
                 </ng-container>
 
                 <!-- Progress Column -->
@@ -45,6 +45,15 @@
 <pre>
 {{selected | json}}
 </pre>
+    </div>
+    <div class="map-container" *ngIf="leafletOptions">
+        <div style="height: 500px;width: 800px"
+             leaflet
+             [leafletOptions]="leafletOptions"
+             [leafletLayers]="markers"
+             (leafletMapReady)="map = mapReady($event)"
+             >
+        </div>
     </div>
 </div>
 

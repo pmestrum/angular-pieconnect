@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from './data.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Lang, Law, Term } from './model';
-import { SelectionModel } from '@angular/cdk/collections';
+import { Settings, Term } from './model';
+import { circle, geoJSON, icon, latLng, Layer, marker, polygon, tileLayer } from 'leaflet';
 
 @Component({
     selector: 'app-root',
@@ -17,24 +17,37 @@ export class AppComponent implements OnInit {
 
     displayedColumns = ['TERM_ID', 'INFO', 'SEMANT'];
     dataSource: MatTableDataSource<any>;
+    leafletOptions;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    selection = new SelectionModel<Term>(false, []);
-
+    selected: Term;
+    map;
+    private settings: Settings;
+    markers: Layer[] = [];
 
     constructor(private dataService: DataService) {
     }
 
     ngOnInit() {
         console.log('in ngInit');
-        this.dataService.loadData$().then(({termElements, tabletop}) => {
+        this.dataService.loadData$().then(({termElements, tabletop, settings}) => {
             this.termElements = termElements;
             this.tabletop = tabletop;
+            this.settings = settings;
             this.dataSource = new MatTableDataSource(termElements);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
+
+            this.leafletOptions = {
+                layers: [
+                    tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+                ],
+                zoom: settings.map.zoom,
+                center: latLng(settings.map.lat, settings.map.lon),
+                zoomControl: !settings.map.disablePanZoom
+            };
         });
     }
 
@@ -45,9 +58,52 @@ export class AppComponent implements OnInit {
     ngAfterViewInit() {
     }
 
+    selectRow(row: Term) {
+        this.selected = row;
+        this.removeMarkers();
+        if (row.lang.LAT && row.lang.LONG) {
+            this.addMarker(row.lang.LAT, row.lang.LONG);
+        }
+    }
+
     applyFilter(filterValue: string) {
         filterValue = filterValue.trim(); // Remove whitespace
         filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
         this.dataSource.filter = filterValue;
+    }
+
+    mapReady(map) {
+        this.map = map;
+
+        if (this.settings.map.disablePanZoom) {
+            map.dragging.disable();
+            map.touchZoom.disable();
+            map.doubleClickZoom.disable();
+            map.scrollWheelZoom.disable();
+            map.boxZoom.disable();
+            map.keyboard.disable();
+            if (map.tap) map.tap.disable();
+            document.getElementById('map').style.cursor='default';
+        }
+    }
+
+    private addMarker(lat, lon) {
+        const newMarker = marker(
+            [ lat, lon ],
+            {
+                icon: icon({
+                    iconSize: [ 25, 41 ],
+                    iconAnchor: [ 13, 41 ],
+                    iconUrl: 'assets/marker-icon.png',
+                    shadowUrl: 'assets/marker-shadow.png'
+                })
+            }
+        );
+
+        this.markers.push(newMarker);
+    }
+
+    private removeMarkers() {
+        this.markers = [];
     }
 }

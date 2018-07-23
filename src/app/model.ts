@@ -26,3 +26,12 @@ export interface Law {
     LINK: string;
     NAME: string;
 }
+
+export interface Settings {
+    map: {
+        lat: number;
+        lon: number;
+        zoom: number;
+        disablePanZoom: boolean;
+    }
+}

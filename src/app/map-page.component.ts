@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from './data.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Settings, Term } from './model';
-import { circle, geoJSON, icon, latLng, latLngBounds,Layer, marker, polygon, tileLayer } from 'leaflet';
+import { circle, geoJSON, icon, latLng, latLngBounds, Layer, marker, polygon, tileLayer } from 'leaflet';
 
 @Component({
     selector: 'app-map-page',
@@ -15,7 +15,7 @@ export class MapPageComponent implements OnInit {
     termElements: Term[] = [];
     tabletop = null;
 
-    displayedColumns = ['TERM_ID', 'INFO', 'SEMANT', 'COORD'];
+    displayedColumns = ['TERM_ID', 'FORM', 'SEMANT', 'COORD'];
     dataSource: MatTableDataSource<any>;
     leafletOptions;
 
@@ -33,7 +33,7 @@ export class MapPageComponent implements OnInit {
 
     ngOnInit() {
         console.log('in ngInit');
-        this.dataService.data$.then(({termElements, tabletop, settings}) => {
+        this.dataService.data$.then(({ termElements, tabletop, settings }) => {
             this.termElements = termElements;
             this.tabletop = tabletop;
             this.settings = settings;
@@ -41,13 +41,19 @@ export class MapPageComponent implements OnInit {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
 
+            this.dataSource.filterPredicate = (data: Term, filter: string) => {
+                debugger;
+                return data.SEMANT.toLowerCase().indexOf(filter.toLowerCase()) >= 0 ||
+                    data.FORM.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
+            };
+
             this.bounds = latLngBounds(latLng(settings.map.bounds.minLat, settings.map.bounds.minLong), latLng(settings.map.bounds.maxLat, settings.map.bounds.maxLong));
             this.leafletOptions = {
                 layers: [
                     tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
                 ],
                 zoom: settings.map.zoom,
-                center: latLng((settings.map.bounds.maxLat + settings.map.bounds.minLat)/2, (settings.map.bounds.maxLong + settings.map.bounds.minLong)/2),
+                center: latLng((settings.map.bounds.maxLat + settings.map.bounds.minLat) / 2, (settings.map.bounds.maxLong + settings.map.bounds.minLong) / 2),
                 zoomControl: !settings.map.disablePanZoom,
                 // maxBounds: latLngBounds(latLng(settings.map.bounds.minLat, settings.map.bounds.minLong), latLng(settings.map.bounds.maxLat, settings.map.bounds.maxLong)),
             };
@@ -87,17 +93,17 @@ export class MapPageComponent implements OnInit {
             map.boxZoom.disable();
             map.keyboard.disable();
             if (map.tap) map.tap.disable();
-            document.getElementById('map').style.cursor='default';
+            // document.getElementById('map').style.cursor = 'default';
         }
     }
 
     private addMarker(lat, lon) {
         const newMarker = marker(
-            [ lat, lon ],
+            [lat, lon],
             {
                 icon: icon({
-                    iconSize: [ 25, 41 ],
-                    iconAnchor: [ 13, 41 ],
+                    iconSize: [25, 41],
+                    iconAnchor: [13, 41],
                     iconUrl: 'assets/marker-icon.png',
                     shadowUrl: 'assets/marker-shadow.png'
                 })

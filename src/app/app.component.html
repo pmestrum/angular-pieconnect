@@ -3,66 +3,12 @@
     <h1>
         Welcome to {{ title }}! </h1>
 </div>
+<nav>
+    <a routerLink="/map" routerLinkActive="active">Map</a>
+    <a routerLink="/about" routerLinkActive="active">About</a>
+    <a routerLink="/forum" routerLinkActive="active">Forum</a>
+    <a routerLink="/links" routerLinkActive="active">Links</a>
+</nav>
+<router-outlet></router-outlet>
 
-<div class="container">
-    <div class="table-container">
-        <div class="example-header">
-            <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-            </mat-form-field>
-        </div>
-
-        <div class="example-container mat-elevation-z8">
-
-            <mat-table [dataSource]="dataSource" matSort>
-
-                <!-- ID Column -->
-                <ng-container matColumnDef="TERM_ID">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-                    <mat-cell *matCellDef="let row" (click)="selectRow(row)"> {{row.TERM_ID}}</mat-cell>
-                </ng-container>
-
-                <!-- Info Column -->
-                <ng-container matColumnDef="INFO">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Info</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.INFO}}</mat-cell>
-                </ng-container>
-
-                <!-- Semantics Column -->
-                <ng-container matColumnDef="SEMANT">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Semantics</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.SEMANT}}</mat-cell>
-                </ng-container>
-
-                <!-- has coordinate Column -->
-                <ng-container matColumnDef="COORD">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Map</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.lang.LAT && row.lang.LONG ? 'X' : ''}}</mat-cell>
-                </ng-container>
-
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-            </mat-table>
-
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-        </div>
-    </div>
-    <div class="map-container">
-        <div class="map"
-             leaflet
-             [leafletOptions]="leafletOptions"
-             [leafletLayers]="markers"
-             (leafletMapReady)="map = mapReady($event)"
-             *ngIf="leafletOptions"
-             >
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="record-container">
-<pre>
-{{selected | json}}
-</pre>
-    </div>
-</div>
 

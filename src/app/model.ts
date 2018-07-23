@@ -18,6 +18,7 @@ export interface Lang {
     LONG: string;
     NAME: string;
     TEMP: string;
+    point: {lat: number, lng: number, alt?: number};
 }
 
 export interface Law {

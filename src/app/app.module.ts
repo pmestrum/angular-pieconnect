@@ -6,9 +6,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule, MatInputModule, MatPaginatorModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MapPageComponent } from './map-page.component';
+import { AboutPageComponent } from './about-page.component';
+import { ForumPageComponent } from './forum-page.component';
+import { LinksPageComponent } from './links-page.component';
+import { AppRoutingModule } from './app.routing.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MapPageComponent, AboutPageComponent, ForumPageComponent, LinksPageComponent],
   imports: [
       BrowserModule,
       MatTableModule,
@@ -16,7 +21,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
       MatPaginatorModule,
       MatInputModule,
       BrowserAnimationsModule,
-      LeafletModule.forRoot()
+      LeafletModule.forRoot(),
+      AppRoutingModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

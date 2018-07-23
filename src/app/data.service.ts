@@ -1,15 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Lang, Settings, Term } from './model';
 import * as Tabletop from 'tabletop';
+import { circle, geoJSON, icon, latLng, latLngBounds, Layer, marker, polygon, tileLayer } from 'leaflet';
 
 // const Tabletop = require('tabletop');
+
+export interface SheetData {
+    termElements: Term[],
+    settings: Settings,
+    tabletop: any
+}
 
 @Injectable()
 export class DataService {
 
-    loadData$(): Promise<{ termElements: Term[], settings: Settings, tabletop: any }> {
-        console.log('in loadData$');
-        return new Promise((resolve, reject) => {
+    private _data$;
+
+    get data$() {
+        if (!this._data$){
+            this.loadData$();
+        }
+        return this._data$;
+    }
+
+    private loadData$(): void {
+        this._data$ = new Promise((resolve, reject) => {
             console.log('in loadData');
             Tabletop.init({
                 key: 'https://docs.google.com/spreadsheets/d/1N_P4SpddLB-14wCst-2uzfjfgDq2qfN4rWxRGohxGGY/edit?usp=sharing',
@@ -51,8 +66,12 @@ export class DataService {
                 // lawElement.terms.push(term);
                 return lawElements[link.LAW_ID];
             });
-            if (term.PTERM_ID && termElements[term.PTERM_ID] && term.TERM_ID !== term.PTERM_ID) {
-                term.parentTerm = termElements[term.PTERM_ID];
+            if (term.PTERM_ID && term.TERM_ID !== term.PTERM_ID) {
+                let parentTerm = termElements[term.PTERM_ID];
+                if (!parentTerm.children) {
+                    parentTerm.children = [];
+                }
+                parentTerm.children.push(term);
             }
         });
 
@@ -70,14 +89,19 @@ export class DataService {
             }
         };
         Object.keys(langElements).map(key => langElements[key]).forEach((lang: Lang) => {
-            if (lang.LAT && lang.LONG) {
-                const lat = lang.LAT && parseInt(lang.LAT);
-                const long = lang.LONG && parseInt(lang.LONG);
+            try {
+                lang.point = latLng(lang.LAT, lang.LONG);
+            } catch (e) {
+                // Ok, lat & lng are not numbers
+            }
+            if (lang.point) {
+                const lat = lang.point.lat;
+                const lng = lang.point.lng;
 
                 settings.map.bounds.minLat = settings.map.bounds.minLat && Math.min(settings.map.bounds.minLat, lat) || lat;
-                settings.map.bounds.minLong = settings.map.bounds.minLong && Math.min(settings.map.bounds.minLong, long) || long;
+                settings.map.bounds.minLong = settings.map.bounds.minLong && Math.min(settings.map.bounds.minLong, lng) || lng;
                 settings.map.bounds.maxLat = settings.map.bounds.maxLat && Math.max(settings.map.bounds.maxLat, lat) || lat;
-                settings.map.bounds.maxLong = settings.map.bounds.maxLong && Math.max(settings.map.bounds.maxLong, long) || long;
+                settings.map.bounds.maxLong = settings.map.bounds.maxLong && Math.max(settings.map.bounds.maxLong, lng) || lng;
             }
         });
 

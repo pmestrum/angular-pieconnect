@@ -6,9 +6,16 @@ export interface Term {
     LANG_ID: number;
     lang: Lang;
     laws: Law[];
-    parentTerm?: Term;
+    protoTerm?: ProtoTerm;
     PTERM_ID: number;
     SEMANT: string;
+}
+
+export interface ProtoTerm {
+    PTERM_ID: number;
+    FORM: string;
+    SEMANT: string;
+    terms?: Term[]
 }
 
 export interface Lang {
@@ -30,11 +37,13 @@ export interface Law {
 }
 
 export interface Settings {
+    showIds: boolean;
     map: {
         lat: number;
         lon: number;
         zoom: number;
         disablePanZoom: boolean;
+        zoomToMarkers: boolean;
         bounds: {
             minLat: number;
             minLong: number;

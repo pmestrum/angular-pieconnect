@@ -5,3 +5,45 @@ html,
 body {
   font-family: sans-serif;
 }
+
+
+
+
+
+.word-marker {
+  width: auto!important;
+  max-width: 200px;
+  height: auto!important;
+  border-radius: 3px;
+  background: #FCFAF3;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+.word-marker div {
+  padding: 0px 4px;
+}
+.word-marker .language {
+  background: #005264;
+  color: #FCFAF3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  font-family: Tahoma, Verdana, Arial, sans-serif;
+  font-size: 9px;
+  line-height: 12px;
+}
+.word-marker .term {
+  width: 100%;
+  display: block;
+  font-style: italic;
+  white-space: nowrap;
+}
+.word-marker .meaning {
+  border-top: 1px solid #bbb;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

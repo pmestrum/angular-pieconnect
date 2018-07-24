@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MapPageComponent } from './map-page.component';
-import { AboutPageComponent } from './about-page.component';
-import { ForumPageComponent } from './forum-page.component';
-import { LinksPageComponent } from './links-page.component';
+import { MapPageComponent } from './components/map-page.component';
+import { AboutPageComponent } from './components/about-page.component';
+import { ForumPageComponent } from './components/forum-page.component';
+import { LinksPageComponent } from './components/links-page.component';
 
 /**
  * Setup all routes here

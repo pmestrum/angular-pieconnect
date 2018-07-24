@@ -42,15 +42,17 @@ export class DataService {
     }
 
     private normalizeData(data) {
-        const arrayToObjectReducer = (key) => (res, lang) => {
+        const arrayToObjectReducer = (key) => (res, object) => {
             return {
                 ...res,
-                [lang[key]]: lang,
+                [object[key]]: object,
             }
         };
         const langElements = data.LANG.elements.reduce(arrayToObjectReducer('LANG_ID'), {});
         const lawElements = data.LAW.elements.reduce(arrayToObjectReducer('LAW_ID'), {});
+        const ptermElements = data.PTERM.elements.reduce(arrayToObjectReducer('PTERM_ID'), {});
         const termElements = data.TERM.elements.reduce(arrayToObjectReducer('TERM_ID'), {});
+
         Object.keys(termElements).forEach(termId => {
             const term = termElements[termId] as Term;
             term.lang = langElements[term.LANG_ID];
@@ -66,26 +68,28 @@ export class DataService {
                 // lawElement.terms.push(term);
                 return lawElements[link.LAW_ID];
             });
-            if (term.PTERM_ID && term.TERM_ID !== term.PTERM_ID) {
-                let parentTerm = termElements[term.PTERM_ID];
-                if (!parentTerm.children) {
-                    parentTerm.children = [];
+            if (term.PTERM_ID) {
+                term.protoTerm = ptermElements[term.PTERM_ID];
+                if (!term.protoTerm.terms) {
+                    term.protoTerm.terms = [];
                 }
-                parentTerm.children.push(term);
+                term.protoTerm.terms.push(term);
             }
         });
 
         const getSetting = (key) => data.SETTINGS.elements.find(el => el.KEY === key).VALUE;
 
         const settings: Settings = {
+            showIds: getSetting('show-ids').toUpperCase() === 'TRUE',
             map: {
                 lat: getSetting('map-center-lat'),
                 lon: getSetting('map-center-lon'),
                 zoom: getSetting('map-zoom'),
                 disablePanZoom: getSetting('map-disable-pan-zoom').toUpperCase() === 'TRUE',
+                zoomToMarkers: getSetting('zoom-to-markers').toUpperCase() === 'TRUE',
                 bounds: {
                     minLat: null, minLong: null, maxLat: null, maxLong: null
-                }
+                },
             }
         };
         Object.keys(langElements).map(key => langElements[key]).forEach((lang: Lang) => {

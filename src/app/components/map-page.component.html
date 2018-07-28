@@ -1,74 +1,81 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="container">
-    <div class="table-container">
-        <div class="example-header">
-            <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-            </mat-form-field>
+<div class="page">
+    <div class="left-container">
+        <div class="table-container">
+            <div class="table-filter">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+            </div>
+
+            <div class="term-table mat-elevation-z8">
+
+                <mat-table [dataSource]="dataSource" matSort>
+
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="TERM_ID">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.TERM_ID}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Info Column -->
+                    <ng-container matColumnDef="FORM">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Form</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.FORM}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Semantics Column -->
+                    <ng-container matColumnDef="SEMANT">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Semantics</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.SEMANT}}</mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row, map)"></mat-row>
+                </mat-table>
+
+                <mat-paginator [pageSizeOptions]="[8]"></mat-paginator>
+            </div>
         </div>
+        <div class="record-container" *ngIf="selected && settings.showIds">
+            <table>
+                <tr>
+                    <td><i>ID</i></td>
+                    <td><b>{{selected.protoTerm.PTERM_ID}}</b></td>
+                </tr>
+                <tr>
+                    <td><i>form</i></td>
+                    <td><b>{{selected.protoTerm.FORM}}</b></td>
+                </tr>
+                <tr>
+                    <td><i>Semant</i></td>
+                    <td><b>{{selected.protoTerm.SEMANT}}</b></td>
+                </tr>
+                <tr>
+                    <td><i>Terms</i></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <th>ID</th>
+                                <th>Form</th>
+                                <th>Lang</th>
+                                <th>Semant</th>
+                                <!--<th>Info</th>-->
+                            </tr>
+                            <tr *ngFor="let term of selected.protoTerm.terms">
+                                <td>{{term.TERM_ID}}</td>
+                                <td>{{term.FORM}}</td>
+                                <td>{{term.lang.NAME}}</td>
+                                <td>{{term.SEMANT}}</td>
+                                <!--<td>{{term.INFO}}</td>-->
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
 
-        <div class="example-container mat-elevation-z8">
-
-            <mat-table [dataSource]="dataSource" matSort>
-
-                <!-- ID Column -->
-                <ng-container matColumnDef="TERM_ID">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.TERM_ID}}</mat-cell>
-                </ng-container>
-
-                <!-- Info Column -->
-                <ng-container matColumnDef="FORM">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Form</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.FORM}}</mat-cell>
-                </ng-container>
-
-                <!-- Semantics Column -->
-                <ng-container matColumnDef="SEMANT">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Semantics</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.SEMANT}}</mat-cell>
-                </ng-container>
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="selectRow(row, map)"></mat-row>
-            </mat-table>
-
-            <mat-paginator [pageSizeOptions]="[8]"></mat-paginator>
+            </table>
         </div>
     </div>
-    <div class="map-container">
-        <div #mapp class="map"
-             leaflet
-             [leafletOptions]="leafletOptions"
-             [leafletLayers]="markers"
-             (leafletMapReady)="map = mapReadyBind($event)"
-             *ngIf="leafletOptions"
-             >
-        </div>
+    <div class="right-container">
+        <div #mapp class="map" leaflet [leafletOptions]="leafletOptions" [leafletLayers]="markers" (leafletMapReady)="map = mapReadyBind($event)" *ngIf="leafletOptions"></div>
     </div>
-</div>
-<div class="container">
-    <div class="record-container" *ngIf="selected && settings.showIds">
-        <table>
-            <tr><td>ID</td><td>{{selected.protoTerm.PTERM_ID}}</td></tr>
-            <tr><td>form</td><td>{{selected.protoTerm.FORM}}</td></tr>
-            <tr><td>Semant</td><td>{{selected.protoTerm.SEMANT}}</td></tr>
-            <tr>
-                <td>Terms</td>
-                <td>
-                    <table>
-                        <tr><th>ID</th><th>Form</th><th>Lang</th><th>Semant</th><th>Info</th></tr>
-                        <tr *ngFor="let term of selected.protoTerm.terms">
-                            <td>{{term.TERM_ID}}</td>
-                            <td>{{term.FORM}}</td>
-                            <td>{{term.lang.NAME}}</td>
-                            <td>{{term.SEMANT}}</td>
-                            <td>{{term.INFO}}</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-
-        </table>
-    </div>
-</div>
 

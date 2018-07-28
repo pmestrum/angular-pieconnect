@@ -72,20 +72,27 @@ export class MapPageComponent implements OnInit {
     }
 
     selectRow(row: Term) {
-        this.selected = row;
-        this.removeMarkers();
-        row.protoTerm.terms.forEach(term => {
-            this.addMarker(term);
-        });
+        if (!this.selected || this.selected.protoTerm.PTERM_ID !== row.protoTerm.PTERM_ID) {
+            this.selected = row;
 
-        const minLat = Math.min(...row.protoTerm.terms.map((term: Term) => term.lang.LAT));
-        const minLong = Math.min(...row.protoTerm.terms.map((term: Term) => term.lang.LONG));
-        const maxLat = Math.max(...row.protoTerm.terms.map((term: Term) => term.lang.LAT));
-        const maxLong = Math.max(...row.protoTerm.terms.map((term: Term) => term.lang.LONG));
-        const bounds = latLngBounds(latLng(minLat, minLong), latLng(maxLat, maxLong));
-        if (this.settings.map.zoomToMarkers) {
-            this.getMap().setZoom(9);
-            this.getMap().fitBounds(bounds);
+            this.removeMarkers();
+            row.protoTerm.terms.forEach(term => {
+                this.addMarker(term);
+            });
+
+            if (this.settings.map.zoomToMarkers) {
+                const minLat = Math.min(...row.protoTerm.terms.map((term: Term) => term.lang.LAT));
+                const minLong = Math.min(...row.protoTerm.terms.map((term: Term) => term.lang.LONG));
+                const maxLat = Math.max(...row.protoTerm.terms.map((term: Term) => term.lang.LAT));
+                const maxLong = Math.max(...row.protoTerm.terms.map((term: Term) => term.lang.LONG));
+                const bounds = latLngBounds(latLng(minLat, minLong), latLng(maxLat, maxLong));
+                const newZoom = this.getMap().getBoundsZoom(bounds) - 0.1;
+
+                const swPoint = this.getMap().project(bounds.getSouthWest(), newZoom);
+                const nePoint = this.getMap().project(bounds.getNorthEast(), newZoom);
+                const center = this.getMap().unproject(swPoint.add(nePoint).divideBy(2), newZoom);
+                this.getMap().flyTo(center, newZoom);
+            }
         }
     }
 
@@ -132,48 +139,27 @@ export class MapPageComponent implements OnInit {
     /**
      * Generate markup for the info overlay popup
      */
-    getPopupMarkup(data) {
+    getPopupMarkup(term: Term) {
         // word class, gender, meaning, link type, bibliographical references, comments
         let s, source, derivedMarkup = '', idx;
-        let markup = '<h3>' + data.lemma + '</h3>';
+        let markup = '<h2>' + term.FORM + '</h2>';
         markup += '<table>';
-        markup += '<tr><th>Language</th><td>' + data.language + '</td></tr>';
-        if (data.word_type) {
-            markup += '<tr><th>Word class</th><td>' + data.word_type + '</td></tr>';
-        }
-        if (data.meaning) {
-            markup += '<tr><th>Meaning</th><td>' + data.meaning + '</td></tr>';
-        }
-        if (data.origin) {
-            markup += '<tr><th>Link type</th><td>' + data.origin + '</td></tr>';
-        }
-        if (data.comment) {
-            markup += '<tr><th>Comments</th><td>' + data.comment + '</td></tr>';
-        }
-        if (data.sources && data.sources.length) {
-            markup += '<tr><th>Cited works</th><td>';
-            for (s in data.sources) {
-                if (data.sources.hasOwnProperty(s)) {
-                    source = data.sources[s];
-                    markup += source.names + ' (' + source.year + ':' + source.page + ')<br>';
-                }
-            }
-            markup += '</td></tr>';
-        }
-        if (data.children && data.children.length) {
-            for (idx in data.children) {
-                if (data.children.hasOwnProperty(idx)) {
-                    let child = data.children[idx];
-                    if (child.lemma && child.language === data.language && child.origin === 'derived') {
-                        derivedMarkup += '<tr><th>' + child.lemma + '</th><td>"' + child.meaning + '"</td></tr>';
-                    }
-                }
-            }
-            if (derivedMarkup) {
-                markup += '<tr><th>Derived terms</th><td><table>' + derivedMarkup + '</table></td>';
-            }
+        markup += '<tr><th>Lang</th><td>' + term.lang.NAME + '</td></tr>';
+        markup += '<tr><th>Family</th><td>' + term.lang.FAMILY + '</td></tr>';
+        if (term.lang.GLOTTO && term.lang.GLOTTO.toLowerCase().startsWith('http')) {
+            markup += '<tr><th>Glotto</th><td><a href="' + term.lang.GLOTTO + '">link</a></td></tr>';
+        } else {
+            markup += '<tr><th>Glotto</th><td>' + term.lang.GLOTTO + '</td></tr>';
         }
         markup += '</table>';
+        if (term.laws) {
+            term.laws.forEach(law => {
+                markup += '<h3>' + law.NAME + '</h3>';
+                markup += law.DESCR + '<br />';
+                // markup += '<a href="' + law.LINK + '">Link</a><p />';
+                markup += '<b>Link:</b>' + law.LINK + '<p />';
+            })
+        }
 
         return markup;
     }
@@ -186,21 +172,11 @@ export class MapPageComponent implements OnInit {
                 icon: divIcon({
                     className: 'word-marker',
                     html: this.getMarkerMarkup(term),
-                    // iconSize: [25, 41],
-                    // iconAnchor: [13, 41],
-                    // iconUrl: 'assets/marker-icon.png',
-                    // shadowUrl: 'assets/marker-shadow.png'
                 })
             }
         );
 
-        // const markerPopup = new popup({offset: new point(0.5, -24)});
-        // oms.addListener('click', function(marker) {
-        //     markerPopup.setContent(marker.desc);
-        //     markerPopup.setLatLng(marker.getLatLng());
-        //     map.openPopup(markerPopup);
-        // });
-
+        newMarker.bindPopup(this.getPopupMarkup(term));
         this.markers.push(newMarker);
     }
 

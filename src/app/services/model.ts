@@ -22,8 +22,8 @@ export interface Lang {
     FAMILY: string;
     GLOTTO: string;
     LANG_ID: number
-    LAT: string;
-    LONG: string;
+    LAT: number;
+    LONG: number;
     NAME: string;
     TEMP: string;
     point: {lat: number, lng: number, alt?: number};

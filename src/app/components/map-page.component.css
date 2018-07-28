@@ -2,13 +2,13 @@ ul {
   text-align: center;
 }
 
-.example-container {
+.term-table {
   display: flex;
   flex-direction: column;
   min-width: 200px;
 }
 
-.example-header {
+.table-filter {
   min-height: 64px;
   padding: 8px 24px 0;
 }
@@ -20,33 +20,65 @@ ul {
 
 .mat-table {
   overflow: auto;
-  max-height: 500px;
+  max-height: 800px;
 }
 
-.container {
+.page {
+  /*display: flex;*/
+  /*flex-direction: row;*/
+}
+
+.left-container {
+  /*flex-grow: 1;*/
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  padding: 5px;
+  overflow: hidden;
+  position: fixed;
+  left: 0;
+  width: 300px;
+}
+.right-container {
+  /*height: 100%;*/
+  /*flex-grow: 5;*/
+  height: 100%;
+  position: fixed;
+  right: 0;
+  width: calc(100% - 300px);
+
 }
 .detail-container {
 
 }
 
 .table-container {
-  flex-grow: 1;
-  padding: 5px;
 
+}
+
+.record-container {
+  overflow: hidden;
+  font-size: 7pt;
 }
 
 .map-container {
-  flex-grow: 5;
-  padding: 5px;
+  min-width: 100px;
+  width: 100%;
+  height: 100%;
+  position:relative;
 }
 
 .map {
+  min-width: 100px;
+  min-height: 100px;
   width: 100%;
-  height: 600px;
+  height: 100%;
 }
 
 .mat-column-TERM_ID {
   max-width: 40px;
+}
+
+html, body, #map {
+  height: 100%;
+  /*width: 100vw;*/
 }

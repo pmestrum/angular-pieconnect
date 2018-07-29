@@ -3,6 +3,7 @@ import { DataService } from '../services/data.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Lang, Settings, Term } from '../services/model';
 import { circle, geoJSON, icon, divIcon, latLng, latLngBounds, Layer, marker, polygon, tileLayer, popup, point } from 'leaflet';
+import { FeedbackService } from '../services/feedback.service';
 
 @Component({
     selector: 'app-map-page',
@@ -30,7 +31,7 @@ export class MapPageComponent implements OnInit {
     markers: Layer[] = [];
     bounds;
 
-    constructor(private dataService: DataService) {
+    constructor(private dataService: DataService, private feedbackService: FeedbackService) {
     }
 
     ngOnInit() {
@@ -182,5 +183,9 @@ export class MapPageComponent implements OnInit {
 
     private removeMarkers() {
         this.markers = [];
+    }
+
+    giveFeedback() {
+        this.feedbackService.openDialog("dsdf", "sdfsdf");
     }
 }

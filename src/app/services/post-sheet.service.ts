@@ -8,14 +8,14 @@ export class PostSheetService {
 
     }
 
-    getForumData(): Promise {
+    getForumData(): Promise<any> {
         const data = {
             ACTION: 'GET-FORUM',
         };
         return this.send(data);
     }
 
-    postFeedback(termId, user, feedback): Promise {
+    postFeedback(termId, user, feedback): Promise<any> {
         const data = {
             ACTION: 'INSERT-ROW',
             SHEET_NAME: 'FEEDBACK',
@@ -27,7 +27,7 @@ export class PostSheetService {
         return this.send(data);
     }
 
-    postToForum(termId, parentPostId, user, post): Promise {
+    postToForum(termId, parentPostId, user, post): Promise<any> {
         const data = {
             ACTION: 'INSERT-ROW',
             SHEET_NAME: 'FORUM-DATA',
@@ -40,7 +40,7 @@ export class PostSheetService {
         return this.send(data);
     }
 
-    private send(data): Promise {
+    private send(data): Promise<any> {
         return new Promise((resolve, reject) => {
             let queryparams = this.jsonToQueryString(data);
             let url = 'https://script.google.com/macros/s/AKfycbz2zhygzbUnTpRC0efoitRcEYZ2JYz34YDGqzOfgnmOy0QT6B0/exec' + queryparams;

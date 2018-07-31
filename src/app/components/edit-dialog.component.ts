@@ -18,7 +18,7 @@ export class EditDialogComponent implements OnInit {
 
     editForm: FormGroup;
 
-    constructor(public dialogRef: MatDialogRef<EditDialogComponent>, @Inject(MAT_DIALOG_DATA) private data: EditDialogData) {
+    constructor(public dialogRef: MatDialogRef<EditDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: EditDialogData) {
     }
 
     onNoClick(): void {

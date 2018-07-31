@@ -243,8 +243,4 @@ export class MapPageComponent implements OnInit {
     private removeMarkers() {
         this.markers = [];
     }
-
-    giveFeedback() {
-        this.modalService.openNewForumtopicDialog('dsdf', 'sdfsdf');
-    }
 }

@@ -17,6 +17,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ForumDialogComponent } from './components/forum-dialog.component';
 import { ModalService } from './services/modal.service';
 import { EditDialogComponent } from './components/edit-dialog.component';
+import { ForumPageComponent } from './components/forum-page.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { EditDialogComponent } from './components/edit-dialog.component';
         LinksPageComponent,
         ForumDialogComponent,
         EditDialogComponent,
+        ForumPageComponent,
     ],
     imports: [
         BrowserModule,

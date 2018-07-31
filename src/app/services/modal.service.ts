@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { PostSheetService } from './post-sheet.service';
 import { MatDialog } from '@angular/material';
-@@import { ToastrService } from 'ngx-toastr';
 import { ForumDialogComponent, ForumDialogData } from '../components/forum-dialog.component';
 import { EditDialogComponent, EditDialogData } from '../components/edit-dialog.component';
-import { ProtoTerm, Term } from './model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ModalService {

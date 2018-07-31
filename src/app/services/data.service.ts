@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Lang, Settings, Term } from './model';
 import * as Tabletop from 'tabletop';
 import { circle, geoJSON, icon, latLng, latLngBounds, Layer, marker, polygon, tileLayer } from 'leaflet';
+import { ToastrService } from 'ngx-toastr';
 
 // const Tabletop = require('tabletop');
 
@@ -15,6 +16,8 @@ export interface SheetData {
 export class DataService {
 
     private _data$;
+
+    constructor(private toastrService: ToastrService) {}
 
     get data$() {
         if (!this._data$){
@@ -54,26 +57,34 @@ export class DataService {
         const termElements = data.TERM.elements.reduce(arrayToObjectReducer('TERM_ID'), {});
 
         Object.keys(termElements).forEach(termId => {
-            const term = termElements[termId] as Term;
-            term.lang = langElements[term.LANG_ID];
-            // if (!term.lang.terms) {
-            //     term.lang.terms = [];
-            // }
-            // term.lang.terms.push(term);
-            term.laws = data.LAWAPP.elements.filter(link => link.TERM_ID === term.TERM_ID).map(link => {
-                // const lawElement = lawElements[link.LAW_ID];
-                // if (!lawElement.terms) {
-                //     lawElement.terms = [];
+            try {
+                const term = termElements[termId] as Term;
+                term.lang = langElements[term.LANG_ID];
+                // if (!term.lang.terms) {
+                //     term.lang.terms = [];
                 // }
-                // lawElement.terms.push(term);
-                return lawElements[link.LAW_ID];
-            });
-            if (term.PTERM_ID) {
-                term.protoTerm = ptermElements[term.PTERM_ID];
-                if (!term.protoTerm.terms) {
-                    term.protoTerm.terms = [];
+                // term.lang.terms.push(term);
+                term.laws = data.LAWAPP.elements.filter(link => link.TERM_ID === term.TERM_ID).map(link => {
+                    // const lawElement = lawElements[link.LAW_ID];
+                    // if (!lawElement.terms) {
+                    //     lawElement.terms = [];
+                    // }
+                    // lawElement.terms.push(term);
+                    return {
+                        DISCUSS: link.DISCUSS,
+                        law: lawElements[link.LAW_ID]
+                    };
+                });
+                if (term.PTERM_ID) {
+                    term.protoTerm = ptermElements[term.PTERM_ID];
+                    if (!term.protoTerm.terms) {
+                        term.protoTerm.terms = [];
+                    }
+                    term.protoTerm.terms.push(term);
                 }
-                term.protoTerm.terms.push(term);
+            } catch (e) {
+                console.error(e);
+                this.toastrService.error(e);
             }
         });
 

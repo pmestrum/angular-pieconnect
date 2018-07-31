@@ -3,29 +3,29 @@ import { NgModule } from '@angular/core';
 import { DataService } from './services/data.service';
 import { AppComponent } from './app.component';
 import { MatTableModule } from '@angular/material/table';
-import { MatDialogModule, MatFormFieldModule, MatInputModule, MatPaginatorModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatPaginatorModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MapPageComponent } from './components/map-page.component';
 import { AboutPageComponent } from './components/about-page.component';
-import { ForumPageComponent } from './components/forum-page.component';
 import { LinksPageComponent } from './components/links-page.component';
 import { AppRoutingModule } from './app.routing.module';
 import { PostSheetService } from './services/post-sheet.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FeedbackDialogComponent } from './components/feedback-dialog.component';
-import { FeedbackService } from './services/feedback.service';
 import { ToastrModule } from 'ngx-toastr';
+import { ForumDialogComponent } from './components/forum-dialog.component';
+import { ModalService } from './services/modal.service';
+import { EditDialogComponent } from './components/edit-dialog.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         MapPageComponent,
         AboutPageComponent,
-        ForumPageComponent,
         LinksPageComponent,
-        FeedbackDialogComponent
+        ForumDialogComponent,
+        EditDialogComponent,
     ],
     imports: [
         BrowserModule,
@@ -33,6 +33,7 @@ import { ToastrModule } from 'ngx-toastr';
         MatFormFieldModule,
         MatPaginatorModule,
         MatInputModule,
+        MatButtonModule,
         BrowserAnimationsModule,
         LeafletModule.forRoot(),
         AppRoutingModule,
@@ -43,8 +44,8 @@ import { ToastrModule } from 'ngx-toastr';
         BrowserAnimationsModule, // required animations module
         ToastrModule.forRoot() // ToastrModule added
     ],
-    entryComponents: [FeedbackDialogComponent],
-    providers: [DataService, PostSheetService, FeedbackService],
+    entryComponents: [ForumDialogComponent, EditDialogComponent],
+    providers: [DataService, PostSheetService, ModalService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

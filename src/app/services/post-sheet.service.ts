@@ -8,34 +8,37 @@ export class PostSheetService {
 
     }
 
-    getForumData(): Promise<any> {
+    getForumTopics(): Promise<any> {
         const data = {
-            ACTION: 'GET-FORUM',
+            ACTION: 'GET-COMMENTS',
         };
         return this.send(data);
     }
 
-    postFeedback(termId, user, feedback): Promise<any> {
+    postNewForumTopic(ptermId, termId, langId, lawId, user, title, post, parentPostUuid): Promise<any> {
         const data = {
             ACTION: 'INSERT-ROW',
-            SHEET_NAME: 'FEEDBACK',
+            SHEET_NAME: 'FORUM',
+            PARENT_POST_UUID: parentPostUuid,
             TERM_ID: termId,
+            PTERM_ID: ptermId,
+            LANG_ID: langId,
+            LAW_ID: lawId,
+            TITLE: title,
             USER: user,
-            TIMESTAMP:true,
-            FEEDBACK:feedback
+            POST: post
         };
         return this.send(data);
     }
 
-    postToForum(termId, parentPostId, user, post): Promise<any> {
+    postEdit(ptermId, termId, user, edit): Promise<any> {
         const data = {
             ACTION: 'INSERT-ROW',
-            SHEET_NAME: 'FORUM-DATA',
+            SHEET_NAME: 'EDITS',
+            PTERM_ID: ptermId,
             TERM_ID: termId,
-            PARENT_POST_ID: parentPostId,
             USER: user,
-            TIMESTAMP:true,
-            POST:post
+            EDIT:edit
         };
         return this.send(data);
     }

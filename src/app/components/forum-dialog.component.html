@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Start forum topic</h1>
+<div mat-dialog-content>
+    <form [formGroup]="newForumTopicForm">
+        <mat-form-field>
+            <input matInput placeholder="User" formControlName="user">
+            <mat-error *ngIf="newForumTopicForm.get('user').hasError('required')">
+                User is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Title" formControlName="title">
+            <mat-error *ngIf="newForumTopicForm.get('title').hasError('required')">
+                Title is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <textarea placeholder="Post" matInput formControlName="post"></textarea>
+            <mat-error *ngIf="newForumTopicForm.get('post').hasError('required')">
+                Post is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="newForumTopicForm.get('post').hasError('minlength')">
+                Post must be minimal 10 characters long
+            </mat-error>
+            <mat-error *ngIf="newForumTopicForm.get('post').hasError('maxlength')">
+                Post can't be more than 1000 characters long
+            </mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <div class="button-row">
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="newForumTopicForm.value" cdkFocusInitial [disabled]="!newForumTopicForm.valid">Send</button>
+    </div>
+</div>

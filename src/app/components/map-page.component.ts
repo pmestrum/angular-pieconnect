@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Lang, Settings, Term } from '../services/model';
+import { Lang, Law, ProtoTerm, Settings, Term } from '../services/model';
 import { circle, geoJSON, icon, divIcon, latLng, latLngBounds, Layer, marker, polygon, tileLayer, popup, point } from 'leaflet';
-import { FeedbackService } from '../services/feedback.service';
+import { ModalService } from '../services/modal.service';
 
 @Component({
     selector: 'app-map-page',
@@ -31,7 +31,7 @@ export class MapPageComponent implements OnInit {
     markers: Layer[] = [];
     bounds;
 
-    constructor(private dataService: DataService, private feedbackService: FeedbackService) {
+    constructor(private dataService: DataService, private modalService: ModalService) {
     }
 
     ngOnInit() {
@@ -55,7 +55,8 @@ export class MapPageComponent implements OnInit {
             this.bounds = latLngBounds(latLng(settings.map.bounds.minLat, settings.map.bounds.minLong), latLng(settings.map.bounds.maxLat, settings.map.bounds.maxLong));
             this.leafletOptions = {
                 layers: [
-                    tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+                    // tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+                    tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {subdomains: 'abcd',  maxZoom: 19, attribution: '...'})
                 ],
                 zoom: settings.map.zoom,
                 center: latLng((settings.map.bounds.maxLat + settings.map.bounds.minLat) / 2, (settings.map.bounds.maxLong + settings.map.bounds.minLong) / 2),
@@ -137,39 +138,97 @@ export class MapPageComponent implements OnInit {
 
     }
 
-    /**
-     * Generate markup for the info overlay popup
-     */
-    getPopupMarkup(term: Term) {
-        // word class, gender, meaning, link type, bibliographical references, comments
-        let s, source, derivedMarkup = '', idx;
-        let markup = '<h2>' + term.FORM + '</h2>';
-        markup += '<table>';
-        markup += '<tr><th>Lang</th><td>' + term.lang.NAME + '</td></tr>';
-        markup += '<tr><th>Family</th><td>' + term.lang.FAMILY + '</td></tr>';
+    editClicked(prototerm: ProtoTerm, term: Term) {
+        this.modalService.openEditDialog({term, prototerm, user: null});
+    }
+
+    newForumTopicClicked(prototerm: ProtoTerm, term: Term, lang: Lang, law: Law) {
+        this.modalService.openNewForumtopicDialog({term, prototerm, lang, law, user: null});
+    }
+
+    getPopupMarkupHtml(term: Term) {
+        let ce = document.createElement.bind(document);
+        let ct = document.createTextNode.bind(document);
+        const createIconButton = (icon, onClick) => {
+            const button = ce('i');
+            button.setAttribute('class', 'material-icons');
+            button.appendChild(ct(icon));
+            button.addEventListener('click', onClick);
+            return button;
+        };
+        const createIconButtons = (cbEdit, cbComment) => {
+            const buttonCell = ce('th');
+            buttonCell.setAttribute('class', 'popup icon-buttons noselect');
+            if (cbComment) {
+                let iconButton = createIconButton('insert_comment', cbComment);
+                iconButton.setAttribute('class', iconButton.getAttribute('class') + ' comment');
+                buttonCell.appendChild(iconButton);
+            }
+            if (cbEdit) {
+                let iconButton = createIconButton('edit', cbEdit);
+                iconButton.setAttribute('class', iconButton.getAttribute('class') + ' edit');
+                buttonCell.appendChild(iconButton);
+            }
+            return buttonCell;
+        };
+
+        const div = ce('div');
+
+        const table = div.appendChild(ce('table'));
+        let row = table.appendChild(ce('tr'));
+        row.appendChild(createIconButtons(this.editClicked.bind(this, null, term), this.newForumTopicClicked.bind(this, null, term, null, null)));
+        row.appendChild(ce('h2')).appendChild(ct(term.FORM));
+        row = table.appendChild(ce('tr'));
+        row.appendChild(ce('th'));
+        row.appendChild(ce('th')).appendChild(ct('Semant'));
+        row.appendChild(ce('td')).appendChild(ct('"' + term.SEMANT + '"'));
+        row = table.appendChild(ce('tr'));
+        row.appendChild(createIconButtons(null, this.newForumTopicClicked.bind(this, null, null, term.lang, null)));
+        row.appendChild(ce('th')).appendChild(ct('Lang'));
+        row.appendChild(ce('td')).appendChild(ct(term.lang.NAME));
+        row = table.appendChild(ce('tr'));
+        row.appendChild(ce('th'));
+        row.appendChild(ce('th')).appendChild(ct('Family'));
+        row.appendChild(ce('td')).appendChild(ct(term.lang.FAMILY));
+        row = table.appendChild(ce('tr'));
+        row.appendChild(ce('th'));
+        row.appendChild(ce('th')).appendChild(ct('Glotto'));
         if (term.lang.GLOTTO && term.lang.GLOTTO.toLowerCase().startsWith('http')) {
-            markup += '<tr><th>Glotto</th><td><a href="' + term.lang.GLOTTO + '">link</a></td></tr>';
+            const link = ce('a');
+            link.setAttribute('href', term.lang.GLOTTO);
+            row.appendChild(ce('td')).appendChild(link).appendChild(ct('link'));
         } else {
-            markup += '<tr><th>Glotto</th><td>' + term.lang.GLOTTO + '</td></tr>';
+            row.appendChild(ce('td')).appendChild(ct(term.lang.GLOTTO));
         }
-        markup += '</table>';
+
         if (term.laws) {
-            term.laws.forEach(law => {
-                markup += '<h3>' + law.NAME + '</h3>';
-                markup += law.DESCR + '<br />';
-                // markup += '<a href="' + law.LINK + '">Link</a><p />';
-                markup += '<b>Link:</b>' + law.LINK + '<p />';
+            term.laws.forEach(lawLink => {
+                row = table.appendChild(ce('tr'));
+                row.appendChild(createIconButtons(null, this.newForumTopicClicked.bind(this, null, null, null, lawLink.law)));
+                row.appendChild(ce('td')).appendChild(ce('h3')).appendChild(ct(lawLink.law.NAME));
+                row = table.appendChild(ce('tr'));
+                row.appendChild(ce('td'));
+                const cell = row.appendChild(ce('td'));
+                cell.setAttribute('colspan', '2');
+                cell.appendChild(ct(lawLink.DISCUSS));
+                cell.appendChild(ce('br'));
+                cell.appendChild(ct(lawLink.law.DESCR));
+                cell.appendChild(ce('br'));
+                let line = cell.appendChild(ce('p'));
+                line.appendChild(ce('b').appendChild(ct('references: ')));
+                line.appendChild(ct(lawLink.law.LINK));
             })
         }
 
-        return markup;
+
+        return div;
     }
 
     private addMarker(term: Term) {
         const newMarker = marker(
             [term.lang.LAT, term.lang.LONG],
             {
-                desc: this.getPopupMarkup(term),
+                // desc: this.getPopupMarkup(term),
                 icon: divIcon({
                     className: 'word-marker',
                     html: this.getMarkerMarkup(term),
@@ -177,7 +236,7 @@ export class MapPageComponent implements OnInit {
             }
         );
 
-        newMarker.bindPopup(this.getPopupMarkup(term));
+        newMarker.bindPopup(this.getPopupMarkupHtml(term));
         this.markers.push(newMarker);
     }
 
@@ -186,6 +245,6 @@ export class MapPageComponent implements OnInit {
     }
 
     giveFeedback() {
-        this.feedbackService.openDialog("dsdf", "sdfsdf");
+        this.modalService.openNewForumtopicDialog('dsdf', 'sdfsdf');
     }
 }

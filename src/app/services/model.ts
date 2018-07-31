@@ -5,7 +5,7 @@ export interface Term {
     FORM: string;
     LANG_ID: number;
     lang: Lang;
-    laws: Law[];
+    laws: LawLink[];
     protoTerm?: ProtoTerm;
     PTERM_ID: number;
     SEMANT: string;
@@ -27,6 +27,11 @@ export interface Lang {
     NAME: string;
     TEMP: string;
     point: {lat: number, lng: number, alt?: number};
+}
+
+export interface LawLink {
+    law: Law;
+    DISCUSS: string;
 }
 
 export interface Law {

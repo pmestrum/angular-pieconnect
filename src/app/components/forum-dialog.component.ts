@@ -14,6 +14,7 @@ export interface ForumDialogData {
 @Component({
     selector: 'forum-dialog',
     templateUrl: 'forum-dialog.component.html',
+    styleUrls: ['./forum-dialog.component.css']
 })
 export class ForumDialogComponent implements OnInit {
 

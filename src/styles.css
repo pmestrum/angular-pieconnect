@@ -48,20 +48,20 @@ body {
   white-space: nowrap;
 }
 
-.popup.icon-buttons {
+.icon-buttons {
   white-space: nowrap;
 }
 
-.popup.icon-buttons .edit, .popup.icon-buttons .comment{
+.icon-buttons .edit, .icon-buttons .comment{
   font-size: 10pt !important;
   cursor:pointer;
 }
 
-.popup.icon-buttons .edit{
+.icon-buttons .edit{
   color: green;
 }
 
-.popup.icon-buttons .comment{
+.icon-buttons .comment{
   color: darkorange;
 }
 

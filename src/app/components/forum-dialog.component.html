@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Start forum topic</h1>
 <div mat-dialog-content>
-    <form [formGroup]="newForumTopicForm">
+    <form [formGroup]="newForumTopicForm" class="newForumTopicForm">
         <mat-form-field>
             <input matInput placeholder="User" formControlName="user">
             <mat-error *ngIf="newForumTopicForm.get('user').hasError('required')">

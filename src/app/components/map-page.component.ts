@@ -243,4 +243,15 @@ export class MapPageComponent implements OnInit {
     private removeMarkers() {
         this.markers = [];
     }
+
+    clearSelection() {
+        this.selected = null;
+        this.markers = [];
+    }
+    editPterm() {
+        this.editClicked(this.selected.protoTerm, null);
+    }
+    commentPterm() {
+       this.newForumTopicClicked(this.selected.protoTerm, null, null, null);
+    }
 }

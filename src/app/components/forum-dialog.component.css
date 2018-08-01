@@ -1,0 +1,4 @@
+.newForumTopicForm {
+    display:flex;
+    flex-direction: column;
+}

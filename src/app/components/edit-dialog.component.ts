@@ -13,6 +13,7 @@ export interface EditDialogData {
 @Component({
     selector: 'edit-dialog',
     templateUrl: 'edit-dialog.component.html',
+    styleUrls: ['./edit-dialog.component.css']
 })
 export class EditDialogComponent implements OnInit {
 

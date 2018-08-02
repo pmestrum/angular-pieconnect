@@ -6,7 +6,8 @@
     "ng": "ng",
     "start": "ng serve --port 4300",
     "build": "ng build --prod",
-    "deploy": "ng build --prod ; ./publish.sh",
+    "buildAndDeploy": "ng build --prod ; ./publish.sh",
+    "deploy": "./publish.sh",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -205,10 +205,13 @@ export class MapPageComponent implements OnInit {
             term.laws.forEach(lawLink => {
                 row = table.appendChild(ce('tr'));
                 row.appendChild(createIconButtons(null, this.newForumTopicClicked.bind(this, null, null, null, lawLink.law)));
-                row.appendChild(ce('td')).appendChild(ce('h3')).appendChild(ct(lawLink.law.NAME));
+                let cell = row.appendChild(ce('td'));
+                cell.setAttribute('colspan', '2');
+                cell.appendChild(ce('h3')).appendChild(ct(lawLink.law.NAME));
+                row.appendChild(cell);
                 row = table.appendChild(ce('tr'));
                 row.appendChild(ce('td'));
-                const cell = row.appendChild(ce('td'));
+                cell = row.appendChild(ce('td'));
                 cell.setAttribute('colspan', '2');
                 cell.appendChild(ct(lawLink.DISCUSS));
                 cell.appendChild(ce('br'));

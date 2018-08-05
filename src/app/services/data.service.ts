@@ -32,11 +32,12 @@ export class DataService {
             Tabletop.init({
                 key: 'https://docs.google.com/spreadsheets/d/1N_P4SpddLB-14wCst-2uzfjfgDq2qfN4rWxRGohxGGY/edit?usp=sharing',
                 callback: (data, tabletop) => {
-                    console.log(data);
-                    console.log(tabletop);
                     const elements = this.normalizeData(data);
                     const termElements = Object.keys(elements.termElements).map(key => elements.termElements[key]);
-                    resolve({ termElements, tabletop, settings: elements.settings });
+                    const ptermElements = Object.keys(elements.ptermElements).map(key => elements.ptermElements[key]);
+                    const langElements = Object.keys(elements.langElements).map(key => elements.langElements[key]);
+                    const lawElements = Object.keys(elements.lawElements).map(key => elements.lawElements[key]);
+                    resolve({ termElements, ptermElements, langElements, lawElements, tabletop, settings: elements.settings });
                 },
                 simpleSheet: false,
                 parseNumbers: true
@@ -121,6 +122,6 @@ export class DataService {
         });
 
         console.log({ langElements, termElements, lawElements, settings });
-        return { langElements, termElements, lawElements, settings };
+        return { langElements, termElements, lawElements, ptermElements, settings };
     }
 }

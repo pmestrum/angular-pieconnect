@@ -1,2 +1,45 @@
 <div>FORUM</div>
 
+<table *ngIf="post == null">
+    <tr>
+        <th>Prototerm</th>
+        <th>Term</th>
+        <th>Lang</th>
+        <th>Law</th>
+        <th>Title</th>
+        <th>Post</th>
+        <th>User</th>
+    </tr>
+    <tr *ngFor="let post of posts" (click)="openPost(post)">
+        <td>{{post.protoTerm?.FORM}}</td>
+        <td>{{post.term?.FORM}}</td>
+        <td>{{post.lang?.NAME}}</td>
+        <td>{{post.law?.NAME}}</td>
+        <td>{{post.TITLE}}</td>
+        <td>{{post.POST}}</td>
+        <td>{{post.USER}}</td>
+    </tr>
+</table>
+
+<div *ngIf="post">
+    <span (click)="post = null">Close</span>
+
+    <table>
+        <tr>
+            <th>Level</th>
+            <th>Title</th>
+            <th>Post</th>
+            <th>User</th>
+            <th></th>
+        </tr>
+        <tr *ngFor="let post of thread">
+            <td>{{post.level}}</td>
+            <td>{{post.TITLE}}</td>
+            <td>{{post.POST}}</td>
+            <td>{{post.USER}}</td>
+            <td (click)="reply(post)">Reply</td>
+        </tr>
+    </table>
+
+
+</div>

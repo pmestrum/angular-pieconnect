@@ -9,6 +9,8 @@ export interface ForumDialogData {
     lang: Lang;
     law: Law;
     user: string;
+    parentUuid?: string;
+    rootUuid?: string;
 }
 
 @Component({

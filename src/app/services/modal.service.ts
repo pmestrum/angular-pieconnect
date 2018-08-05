@@ -18,9 +18,9 @@ export class ModalService {
             data
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe((result) => {
             if (result) {
-                this.postSheetService.postNewForumTopic(result.ptermId, result.termId, result.langId, result.lawId, result.user, result.title, result.post, null).then((resp: { result: string, row: number, uuid: string }) => {
+                this.postSheetService.postNewForumTopic(result.ptermId, result.termId, result.langId, result.lawId, result.user, result.title, result.post, data.parentUuid, data.rootUuid).then((resp: { result: string, row: number, uuid: string }) => {
                     this.toastrService.success('New forum topic is sent', null, { positionClass: 'toast-bottom-right' });
                 }, error => {
                     this.toastrService.error('New forum topic is not sent', null, { positionClass: 'toast-bottom-right' });

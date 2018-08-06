@@ -67,7 +67,7 @@ export class ForumPageComponent implements OnInit {
                         if (foundLevel === null) {
                             foundLevel = p.level;
                         } else {
-                            if (p.level <= foundLevel) {
+                            if (i === null && p.level <= foundLevel) {
                                 i = index;
                             }
                         }

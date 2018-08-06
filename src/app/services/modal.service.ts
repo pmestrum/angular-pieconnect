@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { ForumDialogComponent, ForumDialogData } from '../components/forum-dialog.component';
 import { EditDialogComponent, EditDialogData } from '../components/edit-dialog.component';
 import { ToastrService } from 'ngx-toastr';
-import { ForumPost } from './model';
+import { ForumPost, Lang, Law, ProtoTerm, Term } from './model';
 
 @Injectable()
 export class ModalService {
@@ -22,28 +22,27 @@ export class ModalService {
 
             dialogRef.afterClosed().subscribe((result) => {
                 if (result) {
-                    this.postSheetService.postNewForumTopic(result.ptermId, result.termId, result.langId, result.lawId, result.user, result.title, result.post, data.parentUuid, data.rootUuid).then((resp: { result: string, row: number, uuid: string }) => {
+                    this.postSheetService.postNewForumTopic(result.ptermId, result.termId, result.langId, result.lawId, result.user, result.title, result.post, data.parentUuid, data.rootUuid).then((resp: { result: string, row: number, uuid: string, timestamp: string }) => {
                         this.toastrService.success('New forum topic is sent', null, { positionClass: 'toast-bottom-right' });
                         resolve({
                             UUID: resp.uuid,
                             PARENT_UUID: data.parentUuid,
-                        ROOT_UUID: data.rootUuid,
-                        TIMESTAMP: new Date(),
-                        USER: result.user,
-                        TITLE: result.title,
-                        POST: result.post,
-                        PTERM_ID: data.prototerm && data.prototerm.PTERM_ID || null,
-                        TERM_ID: data.term && data.term.TERM_ID || null,
-                        LANG_ID: data.lang && data.lang.LANG_ID || null,
-                        LAW_ID: data.law && data.law.LAW_ID || null,
-                        protoTerm: data.prototerm,
-                        term: data.term,
-                        lang: data.lang,
-                        law: data.law,
-                        children: [],
-                        level: data.level + 1,
-
-                    })
+                            ROOT_UUID: data.rootUuid,
+                            TIMESTAMP: resp.timestamp,
+                            USER: result.user,
+                            TITLE: result.title,
+                            POST: result.post,
+                            PTERM_ID: data.prototerm && data.prototerm.PTERM_ID || null,
+                            TERM_ID: data.term && data.term.TERM_ID || null,
+                            LANG_ID: data.lang && data.lang.LANG_ID || null,
+                            LAW_ID: data.law && data.law.LAW_ID || null,
+                            protoTerm: data.prototerm,
+                            term: data.term,
+                            lang: data.lang,
+                            law: data.law,
+                            children: [],
+                            level: data.level + 1,
+                        })
                         ;
                     }, error => {
                         this.toastrService.error('New forum topic is not sent', null, { positionClass: 'toast-bottom-right' });

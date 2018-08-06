@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostSheetService } from '../services/post-sheet.service';
-import { ForumPost } from '../services/model';
+import { ForumPost, ForumPosts } from '../services/model';
 import { ModalService } from '../services/modal.service';
 
 @Component({
@@ -13,42 +13,54 @@ export class ForumPageComponent implements OnInit {
     constructor(private postSheetService: PostSheetService, private modalService: ModalService) {
     }
 
-    posts: ForumPost[];
+    posts: ForumPosts;
     post: ForumPost;
     thread: ForumPost[];
+    busy = true;
 
     openPost(post: any) {
-        this.postSheetService.getForumTopicThread(post.UUID).then(res => {
-            this.post = res;
-            this.post.level = 1;
-            this.thread = [];
+        if (!this.busy) {
+            this.busy = true;
+            this.postSheetService.getForumTopicThread(post.UUID).then(res => {
+                this.busy = false;
+                this.post = res;
+                this.post.level = 1;
+                this.thread = [];
 
-            const addToThread = (post, level) => {
-                post.level = level;
-                this.thread.push(post);
-                post.children && post.children.forEach(child => addToThread(child, level + 1));
-            };
+                const addToThread = (post, level) => {
+                    post.level = level;
+                    this.thread.push(post);
+                    post.children && post.children.forEach(child => addToThread(child, level + 1));
+                };
 
-            addToThread(this.post, 1);
-            console.log(this.thread);
-        });
+                addToThread(this.post, 1);
+                console.log(this.thread);
+            });
+        }
     }
 
     ngOnInit(): void {
         this.postSheetService.getForumTopics().then(res => {
+            this.busy = false;
             this.posts = res;
         });
     }
 
     reply(post) {
-        this.modalService.openNewForumtopicDialog({
-            law: post.law,
-            lang: post.lang,
-            term: post.term,
-            prototerm: post.protoTerm,
-            parentUuid: post.UUID,
-            rootUuid: post.ROOT_UUID || post.UUID,
-            user: '',
-        });
+        if (!this.busy) {
+            this.modalService.openNewForumtopicDialog({
+                law: post.law,
+                lang: post.lang,
+                term: post.term,
+                prototerm: post.protoTerm,
+                parentUuid: post.UUID,
+                rootUuid: post.ROOT_UUID || post.UUID,
+                user: '',
+            });
+        }
+    }
+
+    arrayOf(size) {
+        return Array(size);
     }
 }

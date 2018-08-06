@@ -78,3 +78,10 @@ export interface ForumPost {
     children?: ForumPost[];
     level?: number;
 }
+
+export interface ForumPosts {
+    prototerms: {prototerm: ProtoTerm, posts: ForumPost[]}[],
+    terms: {term: Term, posts: ForumPost[]}[],
+    langs: {lang: Lang, posts: ForumPost[]}[],
+    laws: {law: Law, posts: ForumPost[]}[],
+}

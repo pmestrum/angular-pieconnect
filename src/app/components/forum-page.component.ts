@@ -56,6 +56,27 @@ export class ForumPageComponent implements OnInit {
                 parentUuid: post.UUID,
                 rootUuid: post.ROOT_UUID || post.UUID,
                 user: '',
+                level: post.level
+            }).then((forumPost: ForumPost) => {
+                let i = null;
+                let found = false;
+                let foundLevel = null;
+                this.thread.forEach((p, index) => {
+                    found = found || p.UUID === post.UUID;
+                    if (found) {
+                        if (foundLevel === null) {
+                            foundLevel = p.level;
+                        } else {
+                            if (p.level <= foundLevel) {
+                                i = index;
+                            }
+                        }
+                    }
+                });
+                if (i === null) {
+                    i = this.thread.length;
+                }
+                this.thread.splice(i, 0, forumPost);
             });
         }
     }

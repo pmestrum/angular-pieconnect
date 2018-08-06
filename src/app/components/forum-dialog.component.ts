@@ -11,6 +11,7 @@ export interface ForumDialogData {
     user: string;
     parentUuid?: string;
     rootUuid?: string;
+    level?: number;
 }
 
 @Component({

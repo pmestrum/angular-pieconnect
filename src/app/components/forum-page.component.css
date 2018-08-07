@@ -1,0 +1,12 @@
+.post-entry {
+    display: flex;
+    flex-direction: row;
+}
+
+.post {
+
+}
+
+.indent {
+    width: 30px;
+}

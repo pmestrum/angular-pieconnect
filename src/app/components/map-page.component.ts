@@ -143,7 +143,7 @@ export class MapPageComponent implements OnInit {
     }
 
     newForumTopicClicked(prototerm: ProtoTerm, term: Term, lang: Lang, law: Law) {
-        this.modalService.openNewForumtopicDialog({term, prototerm, lang, law, user: null});
+        this.modalService.openNewForumtopicDialog({term, prototerm, lang, law, user: null, level: 0});
     }
 
     getPopupMarkupHtml(term: Term) {

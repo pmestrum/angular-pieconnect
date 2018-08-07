@@ -58,3 +58,30 @@ export interface Settings {
 
     }
 }
+
+export interface ForumPost {
+    UUID: string;
+    PARENT_UUID: string;
+    ROOT_UUID: string;
+    TIMESTAMP: string;
+    USER: string;
+    TITLE: string;
+    POST: string;
+    PTERM_ID: number;
+    TERM_ID: number;
+    LANG_ID: number;
+    LAW_ID: number;
+    protoTerm?: ProtoTerm;
+    term?: Term;
+    lang?: Lang;
+    law?: Law;
+    children?: ForumPost[];
+    level?: number;
+}
+
+export interface ForumPosts {
+    prototerms: {prototerm: ProtoTerm, posts: ForumPost[]}[],
+    terms: {term: Term, posts: ForumPost[]}[],
+    langs: {lang: Lang, posts: ForumPost[]}[],
+    laws: {law: Law, posts: ForumPost[]}[],
+}

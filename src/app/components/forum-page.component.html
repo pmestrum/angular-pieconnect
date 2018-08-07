@@ -1,2 +1,60 @@
 <div>FORUM</div>
 
+<div *ngIf="post == null">
+    <div *ngIf="posts?.prototerms.length">
+        <h2>Prototerms</h2>
+        <div *ngFor="let entry of posts.prototerms">
+            <h3>{{entry.prototerm.FORM}}</h3>
+            <div class="post-entry" *ngFor="let post of entry.posts">
+                <div class="indent" *ngFor="let i of arrayOf(post.level)">&nbsp;</div>
+                <div class="title" (click)="openPost(post)">{{post.TITLE}}</div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="posts?.terms.length">
+        <h2>Terms</h2>
+        <div *ngFor="let entry of posts.terms">
+            <h3>{{entry.term.FORM}}</h3>
+            <div class="post-entry" *ngFor="let post of entry.posts">
+                <div class="indent" *ngFor="let i of arrayOf(post.level)">&nbsp;</div>
+                <div class="title" (click)="openPost(post)">{{post.TITLE}}</div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="posts?.langs.length">
+        <h2>Langs</h2>
+        <div *ngFor="let entry of posts.langs">
+            <h3>{{entry.lang.FORM}}</h3>
+            <div class="post-entry" *ngFor="let post of entry.posts">
+                <div class="indent" *ngFor="let i of arrayOf(post.level)">&nbsp;</div>
+                <div class="title" (click)="openPost(post)">{{post.TITLE}}</div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="posts?.laws.length">
+        <h2>Laws</h2>
+        <div *ngFor="let entry of posts.laws">
+            <h3>{{entry.law.FORM}}</h3>
+            <div class="post-entry" *ngFor="let post of entry.posts">
+                <div class="indent" *ngFor="let i of arrayOf(post.level)">&nbsp;</div>
+                <div class="title" (click)="openPost(post)">{{post.TITLE}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="post">
+    <span (click)="post = null">Close</span>
+
+    <div class="post-entry" *ngFor="let post of thread">
+        <div class="indent" *ngFor="let i of arrayOf(post.level)"> | </div>
+        <div class="body">
+            <div class="title">{{post.TITLE}}</div>
+            <div class="postbody">{{post.POST}}</div>
+            <div class="user">{{post.USER}}</div>
+            <div class="timestamp">{{post.TIMESTAMP}}</div>
+            <div class="reply" (click)="reply(post)">reply</div>
+        </div>
+    </div>
+
+</div>

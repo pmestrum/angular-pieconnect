@@ -1,12 +1,61 @@
-.post-entry {
-    display: flex;
-    flex-direction: row;
-}
-
 .post {
 
 }
 
 .indent {
-    width: 30px;
+    width: 20px;
+    margin-left: 10px;
+    border-left: 1px solid green;
+    overflow: hidden;
+}
+
+.post-entry {
+    display: flex;
+    flex-direction: row;
+}
+
+.post-entry .body {
+    display: block;
+    position: relative;
+}
+
+.post-entry .body .title {
+    display: block;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.post-entry .body .postbody {
+    display: block;
+    font-size: 15px;
+    padding-right: 40px;
+    text-align: justify;
+}
+
+.post-entry .body .footer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    font-size: 14px;
+    color: darkgrey;
+    /*justify-content: space-between;*/
+
+}
+
+.post-entry .body .footer .user {
+    color: blue;
+    font-style: italic;
+    padding-right: 5px;
+}
+
+.post-entry .body .footer .timestamp {
+    right: 80px;
+    position: absolute;
+}
+
+.post-entry .body .footer .reply {
+    color: darkorange;
+    right: 5px;
+    position: absolute;
 }

@@ -3,6 +3,7 @@ export interface Term {
     TERM_ID: number;
     INFO: string;
     FORM: string;
+    ROMAN: string;
     LANG_ID: number;
     lang: Lang;
     laws: LawLink[];

@@ -9,6 +9,12 @@
     overflow: hidden;
 }
 
+.post-entries {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .post-entry {
     display: flex;
     flex-direction: row;
@@ -17,7 +23,10 @@
 .post-entry .body {
     display: block;
     position: relative;
-}
+    border: gray solid 1px;
+    margin: 5px;
+    padding: 10px;
+    background-color: #fffff7;}
 
 .post-entry .body .title {
     display: block;

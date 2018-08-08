@@ -14,10 +14,11 @@ import { PostSheetService } from './services/post-sheet.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
-import { ForumDialogComponent } from './components/forum-dialog.component';
+import { ForumDialogComponent } from './components/dialogs/forum-dialog.component';
 import { ModalService } from './services/modal.service';
-import { EditDialogComponent } from './components/edit-dialog.component';
+import { EditDialogComponent } from './components/dialogs/edit-dialog.component';
 import { ForumPageComponent } from './components/forum-page.component';
+import { NgBusyModule } from 'ng-busy';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { ForumPageComponent } from './components/forum-page.component';
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule, // required animations module
-        ToastrModule.forRoot() // ToastrModule added
+        ToastrModule.forRoot(), // ToastrModule added
+        NgBusyModule
     ],
     entryComponents: [ForumDialogComponent, EditDialogComponent],
     providers: [DataService, PostSheetService, ModalService],

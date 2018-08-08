@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { PostSheetService } from './post-sheet.service';
 import { MatDialog } from '@angular/material';
-import { ForumDialogComponent, ForumDialogData } from '../components/forum-dialog.component';
-import { EditDialogComponent, EditDialogData } from '../components/edit-dialog.component';
+import { ForumDialogComponent, ForumDialogData } from '../components/dialogs/forum-dialog.component';
+import { EditDialogComponent, EditDialogData } from '../components/dialogs/edit-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import { ForumPost, Lang, Law, ProtoTerm, Term } from './model';
 

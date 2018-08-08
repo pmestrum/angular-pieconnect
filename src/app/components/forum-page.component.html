@@ -1,6 +1,6 @@
 <div>FORUM</div>
 
-<div *ngIf="post == null">
+<div *ngIf="post == null" [ngBusy]="busyPromise">
     <div *ngIf="posts?.prototerms.length">
         <h2>Prototerms</h2>
         <div *ngFor="let entry of posts.prototerms">
@@ -44,19 +44,20 @@
 </div>
 
 <div *ngIf="post">
-    <span (click)="post = null">Close</span>
-
-    <div class="post-entry" *ngFor="let post of thread">
-        <div class="indent" *ngFor="let i of arrayOf(post.level - 1)">&nbsp;</div>
-        <div class="body" [ngStyle]="{width: (1200 - post.level * 32) + 'px'}">
-            <div class="title">{{post.TITLE}}</div>
-            <div class="postbody">{{post.POST}}</div>
-            <div class="footer">
-                <div class="user">by {{post.USER}}</div>
-                <div class="timestamp">on {{post.TIMESTAMP}}</div>
-                <div class="reply" (click)="reply(post)"><i class="material-icons">reply</i></div>
+    <div class="post-entries">
+        <button mat-raised-button color="primary" (click)="post = null">Back to all posts</button>
+        <div class="post-entry" *ngFor="let post of thread">
+            <div class="indent" *ngFor="let i of arrayOf(post.level - 1)">&nbsp;</div>
+            <div class="body" [ngStyle]="{width: (1200 - post.level * 32) + 'px'}">
+                <div class="title">{{post.TITLE}}</div>
+                <div class="postbody">{{post.POST}}</div>
+                <div class="footer">
+                    <div class="user">by {{post.USER}}</div>
+                    <div class="timestamp">on {{post.TIMESTAMP}}</div>
+                    <div class="reply" (click)="reply(post)"><i class="material-icons">reply</i></div>
+                </div>
             </div>
         </div>
-    </div>
-
+        <button mat-raised-button color="primary" (click)="post = null">Back to all posts</button>
+yarn    </div>
 </div>

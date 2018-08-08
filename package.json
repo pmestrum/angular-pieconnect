@@ -5,8 +5,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4300",
-    "build": "ng build --prod",
-    "buildAndDeploy": "ng build --prod ; ./publish.sh",
+    "build": "ng build --prod -vc=true",
+    "buildAndDeploy": "ng build --prod -vc=true ; ./publish.sh",
     "deploy": "./publish.sh",
     "test": "ng test",
     "lint": "ng lint",

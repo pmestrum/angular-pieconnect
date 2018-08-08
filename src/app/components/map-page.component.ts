@@ -30,7 +30,7 @@ export class MapPageComponent implements OnInit {
     settings: Settings;
     markers: Layer[] = [];
     bounds;
-    private busyPromise: Promise<any>;
+    busyPromise: Promise<any>;
 
     constructor(private dataService: DataService, private modalService: ModalService) {
     }

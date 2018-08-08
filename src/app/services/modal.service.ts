@@ -29,6 +29,7 @@ export class ModalService {
                             PARENT_UUID: data.parentUuid,
                             ROOT_UUID: data.rootUuid,
                             TIMESTAMP: resp.timestamp,
+                            timestamp: new Date(resp.timestamp),
                             USER: result.user,
                             TITLE: result.title,
                             POST: result.post,

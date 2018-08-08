@@ -4,11 +4,15 @@
         Welcome to {{ title }}! </h1>
 </div>
 <nav>
-    <a routerLink="/map" routerLinkActive="active">Map</a>
-    <a routerLink="/about" routerLinkActive="active">About</a>
-    <a routerLink="/forum" routerLinkActive="active">Forum</a>
-    <a routerLink="/links" routerLinkActive="active">Links</a>
+    <a routerLink="/map" routerLinkActive="active" (click)="activeLink='map'" [ngClass]="{active: isSelected('map')}">Map</a>
+    <a routerLink="/about" routerLinkActive="active" (click)="activeLink='about'" [ngClass]="{active: isSelected('about')}">About</a>
+    <a routerLink="/forum" routerLinkActive="active" (click)="activeLink='forum'" [ngClass]="{active: isSelected('forum')}">Forum</a>
+    <a routerLink="/links" routerLinkActive="active" (click)="activeLink='links'" [ngClass]="{active: isSelected('links')}">Links</a>
+    <a routerLink="/doc" routerLinkActive="active" (click)="activeLink='doc'" [ngClass]="{active: isSelected('doc')}">Documentation</a>
 </nav>
-<router-outlet></router-outlet>
+
+<div class="router-outlet">
+    <router-outlet></router-outlet>
+</div>
 
 

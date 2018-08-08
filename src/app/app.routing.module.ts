@@ -4,6 +4,7 @@ import { MapPageComponent } from './components/map-page.component';
 import { AboutPageComponent } from './components/about-page.component';
 import { ForumPageComponent } from './components/forum-page.component';
 import { LinksPageComponent } from './components/links-page.component';
+import { DocPageComponent } from './components/doc-page.component';
 
 /**
  * Setup all routes here
@@ -28,6 +29,11 @@ export const routes: Routes = [
     path: 'links',
     pathMatch: 'full',
     component: LinksPageComponent
+  },
+  {
+    path: 'doc',
+    pathMatch: 'full',
+    component: DocPageComponent
   },
   {
     path: '**',

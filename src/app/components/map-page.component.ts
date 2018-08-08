@@ -36,7 +36,6 @@ export class MapPageComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('in ngInit');
         this.busyPromise = this.dataService.data$;
         this.busyPromise.then(({ termElements, tabletop, settings }) => {
             this.termElements = termElements;
@@ -59,7 +58,7 @@ export class MapPageComponent implements OnInit {
             this.leafletOptions = {
                 layers: [
                     // tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
-                    tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {subdomains: 'abcd',  maxZoom: 19, attribution: '...'})
+                    tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { subdomains: 'abcd', maxZoom: 19, attribution: '...' })
                 ],
                 zoom: settings.map.zoom,
                 center: latLng((settings.map.bounds.maxLat + settings.map.bounds.minLat) / 2, (settings.map.bounds.maxLong + settings.map.bounds.minLong) / 2),
@@ -134,19 +133,21 @@ export class MapPageComponent implements OnInit {
     mapReadyBind = this.mapReady.bind(this)
 
     private getMarkerMarkup(term: Term): string {
+        const selected = this.selected.TERM_ID === term.TERM_ID;
+        const sameSemant = term.SEMANT === term.protoTerm.SEMANT;
         let markup = '';
-        markup = `<div class="language">${this.settings.showIds ? term.lang.LANG_ID + '-' : ''}${term.lang.NAME}</div>`;
-        markup += `<div class="term">${this.settings.showIds ? term.TERM_ID + '-' : ''}${term.FORM}</div>`;
+        markup = `<div class="language ${sameSemant ? 'same-semant': ''}">${this.settings.showIds ? term.lang.LANG_ID + '-' : ''}${term.lang.NAME}</div>`;
+        markup += `<div class="term ${selected ? 'selected' : ''}">${this.settings.showIds ? term.TERM_ID + '-' : ''}${term.FORM}</div>`;
         return markup;
 
     }
 
     editClicked(prototerm: ProtoTerm, term: Term) {
-        this.modalService.openEditDialog({term, prototerm, user: null});
+        this.modalService.openEditDialog({ term, prototerm, user: null });
     }
 
     newForumTopicClicked(prototerm: ProtoTerm, term: Term, lang: Lang, law: Law) {
-        this.modalService.openNewForumtopicDialog({term, prototerm, lang, law, user: null, level: 0});
+        this.modalService.openNewForumtopicDialog({ term, prototerm, lang, law, user: null, level: 0 });
     }
 
     getPopupMarkupHtml(term: Term) {
@@ -254,10 +255,12 @@ export class MapPageComponent implements OnInit {
         this.selected = null;
         this.markers = [];
     }
+
     editPterm() {
         this.editClicked(this.selected.protoTerm, null);
     }
+
     commentPterm() {
-       this.newForumTopicClicked(this.selected.protoTerm, null, null, null);
+        this.newForumTopicClicked(this.selected.protoTerm, null, null, null);
     }
 }

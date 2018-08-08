@@ -9,8 +9,13 @@ import { DataService } from './services/data.service';
 
 export class AppComponent {
     title = 'Pie Connect';
+    activeLink = 'map';
 
     constructor(private dataService: DataService) {
         dataService.data$.then( () => console.log('data loaded'));
+    }
+
+    isSelected(route) {
+        return this.activeLink === route;
     }
 }

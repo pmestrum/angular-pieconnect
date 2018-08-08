@@ -19,6 +19,7 @@ import { ModalService } from './services/modal.service';
 import { EditDialogComponent } from './components/dialogs/edit-dialog.component';
 import { ForumPageComponent } from './components/forum-page.component';
 import { NgBusyModule } from 'ng-busy';
+import { DocPageComponent } from './components/doc-page.component';
 
 @NgModule({
     declarations: [
@@ -29,6 +30,7 @@ import { NgBusyModule } from 'ng-busy';
         ForumDialogComponent,
         EditDialogComponent,
         ForumPageComponent,
+        DocPageComponent,
     ],
     imports: [
         BrowserModule,

@@ -85,7 +85,6 @@
             <span class="icon-buttons">
                 <i class="material-icons comment" (click)="commentPterm()">insert_comment</i>
                 <i class="material-icons edit" (click)="editPterm()">edit</i>
-                <i class="material-icons clear" (click)="clearSelection()">layers_clear</i>
             </span>
         </div>
         <div #mapp class="map" leaflet [leafletOptions]="leafletOptions" [leafletLayers]="markers" (leafletMapReady)="map = mapReadyBind($event)" *ngIf="leafletOptions"></div>

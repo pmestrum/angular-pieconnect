@@ -30,6 +30,15 @@ body {
   font-size: 9px;
   line-height: 12px;
 }
+
+.word-marker .language.same-semant {
+  background-color: #7b1fa2;
+}
+
+.word-marker .term.selected {
+  background-color: lightyellow;
+}
+
 .word-marker .term {
   width: 100%;
   display: block;

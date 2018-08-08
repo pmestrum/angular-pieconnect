@@ -46,3 +46,28 @@ ul {
   width: 100%;
   height: 600px;
 }
+
+nav a {
+  width: 120px;
+  display: inline-block;
+  background-color: #820303;
+  padding: 10px 20px 10px 20px;
+  color: white;
+  text-align: center;
+  text-decoration: unset;
+  border-radius: 5px;
+}
+
+nav a:hover {
+  background-color: #cc0000;
+}
+
+nav a.active {
+  background-color: #cc0000;
+  color: yellow;
+  font-weight: bold;
+}
+
+.router-outlet {
+  margin: 20px;
+}

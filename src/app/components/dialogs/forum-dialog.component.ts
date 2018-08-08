@@ -1,6 +1,6 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject, OnInit } from '@angular/core';
-import { Lang, Law, ProtoTerm, Term } from '../services/model';
+import { Lang, Law, ProtoTerm, Term } from '../../services/model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export interface ForumDialogData {

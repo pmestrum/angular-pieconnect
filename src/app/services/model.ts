@@ -3,6 +3,7 @@ export interface Term {
     TERM_ID: number;
     INFO: string;
     FORM: string;
+    ROMAN: string;
     LANG_ID: number;
     lang: Lang;
     laws: LawLink[];
@@ -64,6 +65,7 @@ export interface ForumPost {
     PARENT_UUID: string;
     ROOT_UUID: string;
     TIMESTAMP: string;
+    timestamp: Date;
     USER: string;
     TITLE: string;
     POST: string;

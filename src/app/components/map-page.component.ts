@@ -30,13 +30,15 @@ export class MapPageComponent implements OnInit {
     settings: Settings;
     markers: Layer[] = [];
     bounds;
+    busyPromise: Promise<any>;
 
     constructor(private dataService: DataService, private modalService: ModalService) {
     }
 
     ngOnInit() {
         console.log('in ngInit');
-        this.dataService.data$.then(({ termElements, tabletop, settings }) => {
+        this.busyPromise = this.dataService.data$;
+        this.busyPromise.then(({ termElements, tabletop, settings }) => {
             this.termElements = termElements;
             this.tabletop = tabletop;
             this.settings = settings;
@@ -49,7 +51,8 @@ export class MapPageComponent implements OnInit {
 
             this.dataSource.filterPredicate = (data: Term, filter: string) => {
                 return data.SEMANT.toLowerCase().indexOf(filter.toLowerCase()) >= 0 ||
-                    data.FORM.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
+                    data.FORM.toLowerCase().indexOf(filter.toLowerCase()) >= 0 ||
+                    data.ROMAN.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
             };
 
             this.bounds = latLngBounds(latLng(settings.map.bounds.minLat, settings.map.bounds.minLong), latLng(settings.map.bounds.maxLat, settings.map.bounds.maxLong));

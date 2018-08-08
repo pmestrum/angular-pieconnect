@@ -17,11 +17,13 @@ export class ForumPageComponent implements OnInit {
     post: ForumPost;
     thread: ForumPost[];
     busy = true;
+    busyPromise: Promise<any>;
 
     openPost(post: any) {
         if (!this.busy) {
             this.busy = true;
-            this.postSheetService.getForumTopicThread(post.UUID).then(res => {
+            this.busyPromise = this.postSheetService.getForumTopicThread(post.UUID);
+            this.busyPromise.then(res => {
                 this.busy = false;
                 this.post = res;
                 this.post.level = 1;
@@ -40,7 +42,8 @@ export class ForumPageComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.postSheetService.getForumTopics().then(res => {
+        this.busyPromise = this.postSheetService.getForumTopics();
+        this.busyPromise.then(res => {
             this.busy = false;
             this.posts = res;
         });

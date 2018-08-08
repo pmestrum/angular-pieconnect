@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { PostSheetService } from './post-sheet.service';
 import { MatDialog } from '@angular/material';
-import { ForumDialogComponent, ForumDialogData } from '../components/forum-dialog.component';
-import { EditDialogComponent, EditDialogData } from '../components/edit-dialog.component';
+import { ForumDialogComponent, ForumDialogData } from '../components/dialogs/forum-dialog.component';
+import { EditDialogComponent, EditDialogData } from '../components/dialogs/edit-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import { ForumPost, Lang, Law, ProtoTerm, Term } from './model';
 
@@ -29,6 +29,7 @@ export class ModalService {
                             PARENT_UUID: data.parentUuid,
                             ROOT_UUID: data.rootUuid,
                             TIMESTAMP: resp.timestamp,
+                            timestamp: new Date(resp.timestamp),
                             USER: result.user,
                             TITLE: result.title,
                             POST: result.post,

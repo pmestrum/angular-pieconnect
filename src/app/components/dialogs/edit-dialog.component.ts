@@ -1,7 +1,7 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ProtoTerm, Term } from '../services/model';
+import { ProtoTerm, Term } from '../../services/model';
 
 export interface EditDialogData {
     prototerm: ProtoTerm;

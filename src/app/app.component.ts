@@ -11,6 +11,6 @@ export class AppComponent {
     title = 'Pie Connect';
 
     constructor(private dataService: DataService) {
-        dataService.data$.then(() => console.log('data loaded'));
+        dataService.data$.then( () => console.log('data loaded'));
     }
 }

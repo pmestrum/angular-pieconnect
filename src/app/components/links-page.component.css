@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 150px 0px 0px;
+}
+.line {
+    padding-bottom: 1px;
+}
+
+.extra-space {
+    padding-bottom: 8px
+}

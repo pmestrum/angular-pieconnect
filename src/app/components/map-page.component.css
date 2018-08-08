@@ -8,6 +8,11 @@ ul {
   min-width: 200px;
 }
 
+#info-filter {
+  font-size: 9pt;
+  color: dimgray;
+}
+
 .table-filter {
   min-height: 64px;
   padding: 8px 24px 0;

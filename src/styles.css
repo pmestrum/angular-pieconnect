@@ -36,7 +36,7 @@ body {
 }
 
 .word-marker .term.selected {
-  background-color: #F3DF34;
+  background-color: rgba(243, 223, 52, 0.58);
 }
 
 .word-marker .term {

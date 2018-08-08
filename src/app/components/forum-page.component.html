@@ -53,11 +53,11 @@
                 <div class="postbody">{{post.POST}}</div>
                 <div class="footer">
                     <div class="user">by {{post.USER}}</div>
-                    <div class="timestamp">on {{post.TIMESTAMP}}</div>
+                    <div class="timestamp">on {{post.timestamp | date: 'MMM d, y, H:mm:ss'}}</div>
                     <div class="reply" (click)="reply(post)"><i class="material-icons">reply</i></div>
                 </div>
             </div>
         </div>
         <button mat-raised-button color="primary" (click)="post = null">Back to all posts</button>
-yarn    </div>
+    </div>
 </div>

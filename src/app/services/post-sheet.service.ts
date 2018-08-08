@@ -114,6 +114,7 @@ export class PostSheetService {
         if (post.children) {
             post.children.forEach(child => this.replaceIdsWithObjects(data, child));
         }
+        post.timestamp = new Date(post.TIMESTAMP);
         return post;
     }
 

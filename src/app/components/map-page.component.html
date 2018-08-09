@@ -35,47 +35,7 @@
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row, map)"></mat-row>
                 </mat-table>
-
-                <mat-paginator [pageSizeOptions]="[8]"></mat-paginator>
             </div>
-        </div>
-        <div class="record-container" *ngIf="selected && settings.showIds">
-            <table>
-                <tr>
-                    <td><i>ID</i></td>
-                    <td><b>{{selected.protoTerm.PTERM_ID}}</b></td>
-                </tr>
-                <tr>
-                    <td><i>form</i></td>
-                    <td><b>{{selected.protoTerm.FORM}}</b></td>
-                </tr>
-                <tr>
-                    <td><i>Semant</i></td>
-                    <td><b>{{selected.protoTerm.SEMANT}}</b></td>
-                </tr>
-                <tr>
-                    <td><i>Terms</i></td>
-                    <td>
-                        <table>
-                            <tr>
-                                <th>ID</th>
-                                <th>Form</th>
-                                <th>Lang</th>
-                                <th>Semant</th>
-                                <!--<th>Info</th>-->
-                            </tr>
-                            <tr *ngFor="let term of selected.protoTerm.terms">
-                                <td>{{term.TERM_ID}}</td>
-                                <td>{{term.FORM}}</td>
-                                <td>{{term.lang.NAME}}</td>
-                                <td>{{term.SEMANT}}</td>
-                                <!--<td>{{term.INFO}}</td>-->
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-            </table>
         </div>
     </div>
     <div class="right-container">

@@ -7,7 +7,7 @@
     "start": "ng serve --port 4300",
     "build": "ng build --prod -vc=true",
     "buildAndDeploy": "ng build --prod -vc=true ; ./publish.sh",
-    "deploy": "./publish.sh",
+    "deploy": "./publish-webhost.sh",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

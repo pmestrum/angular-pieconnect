@@ -129,7 +129,7 @@ export class PostSheetService {
             if (post.protoTerm) {
                 let existing = result.prototerms.find(el => el.prototerm.PTERM_ID === post.protoTerm.PTERM_ID);
                 if (!existing) {
-                    existing = {prototerm: post.protoTerm, posts: []};
+                    existing = {prototerm: post.protoTerm, name: post.protoTerm.FORM, posts: []};
                     result.prototerms.push(existing);
                 }
                 existing.posts.push(post);
@@ -137,7 +137,7 @@ export class PostSheetService {
             if (post.term) {
                 let existing = result.terms.find(el => el.term.TERM_ID === post.term.TERM_ID);
                 if (!existing) {
-                    existing = {term: post.term, posts: []};
+                    existing = {term: post.term, name: post.term.FORM, posts: []};
                     result.terms.push(existing);
                 }
                 existing.posts.push(post);
@@ -145,7 +145,7 @@ export class PostSheetService {
             if (post.lang) {
                 let existing = result.langs.find(el => el.lang.LANG_ID === post.lang.LANG_ID);
                 if (!existing) {
-                    existing = {lang: post.lang, posts: []};
+                    existing = {lang: post.lang, name: post.lang.NAME, posts: []};
                     result.langs.push(existing);
                 }
                 existing.posts.push(post);
@@ -153,7 +153,7 @@ export class PostSheetService {
             if (post.law) {
                 let existing = result.laws.find(el => el.law.LAW_ID === post.law.LAW_ID);
                 if (!existing) {
-                    existing = {law: post.law, posts: []};
+                    existing = {law: post.law, name: post.law.NAME, posts: []};
                     result.laws.push(existing);
                 }
                 existing.posts.push(post);

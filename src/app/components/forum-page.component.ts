@@ -14,6 +14,7 @@ export class ForumPageComponent implements OnInit {
     }
 
     posts: ForumPosts;
+    postsArray: {type: string, instances: {name: string, posts: ForumPost[]}[]}[];
     post: ForumPost;
     thread: ForumPost[];
     busy = true;
@@ -46,6 +47,19 @@ export class ForumPageComponent implements OnInit {
         this.busyPromise.then(res => {
             this.busy = false;
             this.posts = res;
+            this.postsArray = [];
+            if (this.posts.prototerms && this.posts.prototerms.length) {
+                this.postsArray.push({type: 'Prototerms', instances: this.posts.prototerms});
+            }
+            if (this.posts.terms && this.posts.terms.length) {
+                this.postsArray.push({type: 'Terms', instances: this.posts.terms});
+            }
+            if (this.posts.langs && this.posts.langs.length) {
+                this.postsArray.push({type: 'Langs', instances: this.posts.langs});
+            }
+            if (this.posts.laws && this.posts.laws.length) {
+                this.postsArray.push({type: 'Laws', instances: this.posts.laws});
+            }
         });
     }
 

@@ -76,27 +76,25 @@ export class MapPageComponent implements OnInit {
     }
 
     selectRow(row: Term) {
-        if (!this.selected || this.selected.protoTerm.PTERM_ID !== row.protoTerm.PTERM_ID) {
-            this.selected = row;
+        this.selected = row;
 
-            this.removeMarkers();
-            row.protoTerm.terms.forEach(term => {
-                this.addMarker(term);
-            });
+        this.removeMarkers();
+        row.protoTerm.terms.forEach(term => {
+            this.addMarker(term);
+        });
 
-            if (this.settings.map.zoomToMarkers) {
-                const minLat = Math.min(...row.protoTerm.terms.map((term: Term) => term.lang.LAT));
-                const minLong = Math.min(...row.protoTerm.terms.map((term: Term) => term.lang.LONG));
-                const maxLat = Math.max(...row.protoTerm.terms.map((term: Term) => term.lang.LAT));
-                const maxLong = Math.max(...row.protoTerm.terms.map((term: Term) => term.lang.LONG));
-                const bounds = latLngBounds(latLng(minLat, minLong), latLng(maxLat, maxLong));
-                const newZoom = this.getMap().getBoundsZoom(bounds) - 0.1;
+        if (this.settings.map.zoomToMarkers) {
+            const minLat = Math.min(...row.protoTerm.terms.map((term: Term) => term.lang.LAT));
+            const minLong = Math.min(...row.protoTerm.terms.map((term: Term) => term.lang.LONG));
+            const maxLat = Math.max(...row.protoTerm.terms.map((term: Term) => term.lang.LAT));
+            const maxLong = Math.max(...row.protoTerm.terms.map((term: Term) => term.lang.LONG));
+            const bounds = latLngBounds(latLng(minLat, minLong), latLng(maxLat, maxLong));
+            const newZoom = this.getMap().getBoundsZoom(bounds) - 0.1;
 
-                const swPoint = this.getMap().project(bounds.getSouthWest(), newZoom);
-                const nePoint = this.getMap().project(bounds.getNorthEast(), newZoom);
-                const center = this.getMap().unproject(swPoint.add(nePoint).divideBy(2), newZoom);
-                this.getMap().flyTo(center, newZoom);
-            }
+            const swPoint = this.getMap().project(bounds.getSouthWest(), newZoom);
+            const nePoint = this.getMap().project(bounds.getNorthEast(), newZoom);
+            const center = this.getMap().unproject(swPoint.add(nePoint).divideBy(2), newZoom);
+            this.getMap().flyTo(center, newZoom);
         }
     }
 
@@ -135,8 +133,7 @@ export class MapPageComponent implements OnInit {
     private getMarkerMarkup(term: Term): string {
         const selected = this.selected.TERM_ID === term.TERM_ID;
         const sameSemant = term.SEMANT === term.protoTerm.SEMANT;
-        let markup = '';
-        markup = `<div class="language ${sameSemant ? 'same-semant': ''}">${this.settings.showIds ? term.lang.LANG_ID + '-' : ''}${term.lang.NAME}</div>`;
+        let markup = `<div class="language ${sameSemant ? 'same-semant' : ''}">${this.settings.showIds ? term.lang.LANG_ID + '-' : ''}${term.lang.NAME}</div>`;
         markup += `<div class="term ${selected ? 'selected' : ''}">${this.settings.showIds ? term.TERM_ID + '-' : ''}${term.FORM}</div>`;
         return markup;
 

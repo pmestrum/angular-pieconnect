@@ -5,80 +5,76 @@
 
 html,
 body {
-  font-family: sans-serif;
+    font-family: sans-serif;
 }
-
 
 .word-marker {
-  width: auto!important;
-  max-width: 200px;
-  height: auto!important;
-  border-radius: 3px;
-  background: #FCFAF3;
-  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.3);
+    width: auto !important;
+    max-width: 200px;
+    height: auto !important;
+    border-radius: 3px;
+    background: #FCFAF3;
+    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
 }
+
 .word-marker div {
-  padding: 0px 4px;
+    padding: 0px 4px;
 }
+
 .word-marker .language {
-  background: #7b1fa2;
-  color: #FCFAF3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-top-right-radius: 3px;
-  border-top-left-radius: 3px;
-  font-family: Tahoma, Verdana, Arial, sans-serif;
-  font-size: 9px;
-  line-height: 12px;
-}
-
-.word-marker .language.same-semant {
-  background-color: #005264;
-}
-
-.word-marker .term.selected {
-  background-color: rgba(243, 223, 52, 0.58);
+    background: #7b1fa2;
+    color: #FCFAF3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    font-family: Tahoma, Verdana, Arial, sans-serif;
+    font-size: 9px;
+    line-height: 12px;
 }
 
 .word-marker .term {
-  width: 100%;
-  display: block;
-  font-style: italic;
-  white-space: nowrap;
+    display: block;
+    font-style: italic;
+    white-space: nowrap;
 }
-.word-marker .meaning {
-  border-top: 1px solid #bbb;
-  width: 100%;
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
+.word-marker .language.same-semant {
+    background-color: #005264;
+}
+
+.word-marker .term.selected {
+    background-color: rgba(243, 223, 52, 0.58);
+    overflow: hidden;
 }
 
 .icon-buttons {
-  white-space: nowrap;
+    white-space: nowrap;
 }
 
-.icon-buttons .edit, .icon-buttons .comment{
-  font-size: 10pt !important;
-  cursor:pointer;
+.icon-buttons .edit, .icon-buttons .comment {
+    font-size: 10pt !important;
+    cursor: pointer;
 }
 
-.icon-buttons .edit{
-  color: green;
+.icon-buttons .edit {
+    color: green;
 }
 
-.icon-buttons .comment{
-  color: darkorange;
+.icon-buttons .comment {
+    color: darkorange;
 }
 
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                     supported by Chrome and Opera */
 }

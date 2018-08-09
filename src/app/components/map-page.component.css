@@ -79,6 +79,13 @@ ul {
   font-size: 20pt;
 
 }
+
+#pterm-semant {
+  text-align: center;
+  font-size: 10pt;
+
+}
+
 #prototerm .icon-buttons {
   text-align: right;
   padding: 5pt;

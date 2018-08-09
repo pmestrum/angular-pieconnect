@@ -21,7 +21,7 @@ body {
   padding: 0px 4px;
 }
 .word-marker .language {
-  background: #005264;
+  background: #7b1fa2;
   color: #FCFAF3;
   white-space: nowrap;
   overflow: hidden;
@@ -34,11 +34,11 @@ body {
 }
 
 .word-marker .language.same-semant {
-  background-color: #7b1fa2;
+  background-color: #005264;
 }
 
 .word-marker .term.selected {
-  background-color: lightyellow;
+  background-color: rgba(243, 223, 52, 0.58);
 }
 
 .word-marker .term {

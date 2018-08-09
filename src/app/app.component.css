@@ -54,7 +54,7 @@ nav {
 nav a {
   width: 70px;
   display: inline-block;
-  background-color: #820303;
+  background-color: #005264;
   padding: 10px 20px 10px 20px;
   color: white;
   text-align: center;
@@ -63,12 +63,12 @@ nav a {
 }
 
 nav a:hover {
-  background-color: #cc0000;
+  background-color: #644AB4;
 }
 
 nav a.active {
-  background-color: #cc0000;
-  color: yellow;
+  background-color: #644AB4;
+  color: white;
   font-weight: bold;
 }
 

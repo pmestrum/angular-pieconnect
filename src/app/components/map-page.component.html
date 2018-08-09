@@ -4,7 +4,7 @@
         <div class="table-container">
             <div class="table-filter">
                 <span id="info-filter">
-                    Start typing any word of any Indo-European language, and select your search from the filter
+                    Start typing any word of any Indo-European language, and select your search in the filter.<br>(Cognates of the selection with changed semantics are shown in another colour.)
                 </span>
                 <mat-form-field>
                     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
@@ -82,6 +82,7 @@
         <div id="prototerm" *ngIf="selected">
             <span id="result-pie">Result pie</span>
             <span id="pterm-form">{{selected.protoTerm.FORM}}</span>
+            <span id="pterm-semant">{{selected.protoTerm.SEMANT}}</span>
             <span class="icon-buttons">
                 <i class="material-icons comment" (click)="commentPterm()">insert_comment</i>
                 <i class="material-icons edit" (click)="editPterm()">edit</i>

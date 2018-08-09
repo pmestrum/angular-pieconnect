@@ -1,16 +1,18 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-    <h1>
-        Welcome to {{ title }}! </h1>
+<div class="header">
+    <nav>
+        <a routerLink="/map" routerLinkActive="active" (click)="activeLink='map'" [ngClass]="{active: isSelected('map')}">Map</a>
+        <a routerLink="/about" routerLinkActive="active" (click)="activeLink='about'" [ngClass]="{active: isSelected('about')}">About</a>
+        <a routerLink="/forum" routerLinkActive="active" (click)="activeLink='forum'" [ngClass]="{active: isSelected('forum')}">Forum</a>
+        <a routerLink="/links" routerLinkActive="active" (click)="activeLink='links'" [ngClass]="{active: isSelected('links')}">Links</a>
+        <a routerLink="/doc" routerLinkActive="active" (click)="activeLink='doc'" [ngClass]="{active: isSelected('doc')}">Doc</a>
+    </nav>
+  <div class="title">
+      <span class="logo">
+          <img src="../assets/logo-200px.png" width="50px" height="50px"/>
+          PIE Connect
+      </span>
+  </div>
 </div>
-<nav>
-    <a routerLink="/map" routerLinkActive="active" (click)="activeLink='map'" [ngClass]="{active: isSelected('map')}">Map</a>
-    <a routerLink="/about" routerLinkActive="active" (click)="activeLink='about'" [ngClass]="{active: isSelected('about')}">About</a>
-    <a routerLink="/forum" routerLinkActive="active" (click)="activeLink='forum'" [ngClass]="{active: isSelected('forum')}">Forum</a>
-    <a routerLink="/links" routerLinkActive="active" (click)="activeLink='links'" [ngClass]="{active: isSelected('links')}">Links</a>
-    <a routerLink="/doc" routerLinkActive="active" (click)="activeLink='doc'" [ngClass]="{active: isSelected('doc')}">Documentation</a>
-</nav>
-
 <div class="router-outlet">
     <router-outlet></router-outlet>
 </div>

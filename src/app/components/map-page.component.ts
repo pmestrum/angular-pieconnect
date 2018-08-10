@@ -181,11 +181,11 @@ export class MapPageComponent implements OnInit {
         row.appendChild(ce('h2')).appendChild(ct(term.FORM));
         row = table.appendChild(ce('tr'));
         row.appendChild(ce('th'));
-        row.appendChild(ce('th')).appendChild(ct('Semant'));
+        row.appendChild(ce('th')).appendChild(ct('Semantics'));
         row.appendChild(ce('td')).appendChild(ct('"' + term.SEMANT + '"'));
         row = table.appendChild(ce('tr'));
         row.appendChild(createIconButtons(null, this.newForumTopicClicked.bind(this, null, null, term.lang, null)));
-        row.appendChild(ce('th')).appendChild(ct('Lang'));
+        row.appendChild(ce('th')).appendChild(ct('Language'));
         row.appendChild(ce('td')).appendChild(ct(term.lang.NAME));
         row = table.appendChild(ce('tr'));
         row.appendChild(ce('th'));
@@ -193,7 +193,7 @@ export class MapPageComponent implements OnInit {
         row.appendChild(ce('td')).appendChild(ct(term.lang.FAMILY));
         row = table.appendChild(ce('tr'));
         row.appendChild(ce('th'));
-        row.appendChild(ce('th')).appendChild(ct('Glotto'));
+        row.appendChild(ce('th')).appendChild(ct('Glottolog'));
         if (term.lang.GLOTTO && term.lang.GLOTTO.toLowerCase().startsWith('http')) {
             const link = ce('a');
             link.setAttribute('href', term.lang.GLOTTO);

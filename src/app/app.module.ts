@@ -20,6 +20,25 @@ import { EditDialogComponent } from './components/dialogs/edit-dialog.component'
 import { ForumPageComponent } from './components/forum-page.component';
 import { NgBusyModule } from 'ng-busy';
 import { DocPageComponent } from './components/doc-page.component';
+import { NgcCookieConsentConfig, NgcCookieConsentModule } from 'ngx-cookieconsent';
+import { LocalStorageService } from './services/local-storage.service';
+
+const cookieConfig:NgcCookieConsentConfig = {
+    cookie: {
+        domain: 'pieconnect.com' // or 'your.domain.com' // it is mandatory to set a domain, for cookies to work properly (see https://goo.gl/S2Hy2A)
+    },
+    palette: {
+        popup: {
+            background: '#000'
+        },
+        button: {
+            background: '#f1d600'
+        }
+    },
+    theme: 'edgeless',
+    type: 'opt-out',
+    dismissOnTimeout: 10000,
+};
 
 @NgModule({
     declarations: [
@@ -51,7 +70,7 @@ import { DocPageComponent } from './components/doc-page.component';
         NgBusyModule
     ],
     entryComponents: [ForumDialogComponent, EditDialogComponent],
-    providers: [DataService, PostSheetService, ModalService],
+    providers: [DataService, PostSheetService, ModalService, LocalStorageService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

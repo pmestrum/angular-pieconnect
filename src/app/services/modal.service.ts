@@ -5,11 +5,12 @@ import { ForumDialogComponent, ForumDialogData } from '../components/dialogs/for
 import { EditDialogComponent, EditDialogData } from '../components/dialogs/edit-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import { ForumPost, Lang, Law, ProtoTerm, Term } from './model';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable()
 export class ModalService {
 
-    constructor(private postSheetService: PostSheetService, private dialog: MatDialog, private toastrService: ToastrService) {
+    constructor(private postSheetService: PostSheetService, private dialog: MatDialog, private toastrService: ToastrService, private localStorageService: LocalStorageService) {
 
     }
 
@@ -23,6 +24,7 @@ export class ModalService {
             dialogRef.afterClosed().subscribe((result) => {
                 if (result) {
                     this.postSheetService.postNewForumTopic(result.ptermId, result.termId, result.langId, result.lawId, result.user, result.title, result.post, data.parentUuid, data.rootUuid).then((resp: { result: string, row: number, uuid: string, timestamp: string }) => {
+                        this.localStorageService.setUser(result.user);
                         this.toastrService.success('New forum topic is sent', null, { positionClass: 'toast-bottom-right' });
                         resolve({
                             UUID: resp.uuid,
@@ -63,6 +65,7 @@ export class ModalService {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.postSheetService.postEdit(result.ptermId, result.termId, result.user, result.edit).then((resp: { result: string, row: number, uuid: string }) => {
+                    this.localStorageService.setUser(result.user);
                     this.toastrService.success('Edit is sent', null, { positionClass: 'toast-bottom-right' });
                 }, error => {
                     this.toastrService.error('Edit is not sent', null, { positionClass: 'toast-bottom-right' });

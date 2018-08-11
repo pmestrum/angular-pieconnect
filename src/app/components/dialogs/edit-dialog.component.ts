@@ -2,6 +2,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProtoTerm, Term } from '../../services/model';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 export interface EditDialogData {
     prototerm: ProtoTerm;
@@ -19,7 +20,7 @@ export class EditDialogComponent implements OnInit {
 
     editForm: FormGroup;
 
-    constructor(public dialogRef: MatDialogRef<EditDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: EditDialogData) {
+    constructor(public dialogRef: MatDialogRef<EditDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: EditDialogData, private localStorageService: LocalStorageService) {
     }
 
     onNoClick(): void {
@@ -30,7 +31,7 @@ export class EditDialogComponent implements OnInit {
         this.editForm = new FormGroup({
             termId: new FormControl(this.data.term && this.data.term.TERM_ID),
             ptermId: new FormControl((this.data.prototerm && this.data.prototerm.PTERM_ID) || (this.data.term && this.data.term.PTERM_ID)),
-            user: new FormControl('', Validators.required),
+            user: new FormControl(this.localStorageService.getUser(), Validators.required),
             edit: new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(1000)])),
         });
     }

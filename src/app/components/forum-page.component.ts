@@ -55,7 +55,7 @@ export class ForumPageComponent implements OnInit {
                 this.postsArray.push({type: 'Terms', instances: this.posts.terms});
             }
             if (this.posts.langs && this.posts.langs.length) {
-                this.postsArray.push({type: 'Langs', instances: this.posts.langs});
+                this.postsArray.push({type: 'Languages', instances: this.posts.langs});
             }
             if (this.posts.laws && this.posts.laws.length) {
                 this.postsArray.push({type: 'Laws', instances: this.posts.laws});

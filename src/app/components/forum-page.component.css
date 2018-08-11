@@ -11,11 +11,12 @@
     font-weight: bold;
     font-size: 24pt;
     padding-top: 20px;
+    color: #005264;
 }
 
 .instance-name {
     font-weight: bold;
-    font-size: 18pt;
+    font-size: 13pt;
 }
 
 .type .instances{

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { DataService } from './services/data.service';
-import { NgcCookieConsentService, NgcInitializeEvent, NgcStatusChangeEvent } from 'ngx-cookieconsent';
-import { Subscription } from 'rxjs/Subscription';
 import { LocalStorageService } from './services/local-storage.service';
 
 @Component({

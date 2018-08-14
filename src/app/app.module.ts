@@ -21,6 +21,7 @@ import { ForumPageComponent } from './components/forum-page.component';
 import { NgBusyModule } from 'ng-busy';
 import { DocPageComponent } from './components/doc-page.component';
 import { LocalStorageService } from './services/local-storage.service';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
     declarations: [
@@ -49,7 +50,8 @@ import { LocalStorageService } from './services/local-storage.service';
         ReactiveFormsModule,
         BrowserAnimationsModule, // required animations module
         ToastrModule.forRoot(), // ToastrModule added
-        NgBusyModule
+        NgBusyModule,
+        PdfViewerModule
     ],
     entryComponents: [ForumDialogComponent, EditDialogComponent],
     providers: [DataService, PostSheetService, ModalService, LocalStorageService],
